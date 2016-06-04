@@ -3,3 +3,20 @@
 # Kevin Mendoza
 # CSCI 465
 # Project 1
+
+# Lines 8-10 are to test if ruby
+# was installed correctly
+# print "Enter a string: "
+# a = gets.chomp
+# print {a}
+
+require 'find'      # Adds module "find"
+
+regex       = Array.new   # Note: Same as regex = []
+directory   = Dir.pwd     # Current Directory
+
+Find.find(directory) do |path|
+    regex << path if path =~ *\.rb$/ || *\.erb$/ || *\.js$/ || *\.css$/ || *\.html$/ || *\.yml$/ || *\.txt$/
+end
+
+print regex
