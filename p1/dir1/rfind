@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+# Kevin Mendoza
+# CSCI 465
+# Project 1
+
+# Lines 8-10 are to test if ruby
+# was installed correctly
+# print "Enter a string: "
+# a = gets.chomp
+# print {a}
+
+require 'find'              # Adds module "find"
+
+extension   = Array.new     # Note: Same as extension = []
+directory   = Dir.pwd       # Current Directory
+regex       = ARGV[0].to_s  # Turns terminal input into a string (to_s)
+
+Find.find(directory) do |path|
+    extension << path if path =~ /#{regex}\w*.rb\b/
+    extension << path if path =~ /#{regex}\w*.erb\b/
+    extension << path if path =~ /#{regex}\w*.js\b/
+    extension << path if path =~ /#{regex}\w*.css\b/
+    extension << path if path =~ /#{regex}\w*.html\b/
+    extension << path if path =~ /#{regex}\w*.yml\b/
+    extension << path if path =~ /#{regex}\w*.txt\b/
+end
+
+puts "Files with names that matches <#{regex}>"
+puts "  .#{extension.join("\n  .")}"
+puts "**************************************************"
+puts "Files with content that matches <#{regex}>"
+puts regex
