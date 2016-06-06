@@ -15,6 +15,7 @@ require 'find'              # Adds module "find"
 extension   = Array.new     # Note: Same as extension = []
 directory   = Dir.pwd       # Current Directory
 regex       = ARGV[0].to_s  # Turns terminal input into a string (to_s)
+fsearch     = Array.new
 
 Find.find(directory) do |path|
     extension << path if path =~ /#{regex}\w*.rb\b/
@@ -26,8 +27,14 @@ Find.find(directory) do |path|
     extension << path if path =~ /#{regex}\w*.txt\b/
 end
 
+extension.each do |filename|
+    File.open filename do |file|
+        fsearch << file.find {|line| line =~ /#{regex}/}
+    end
+end
+
 puts "Files with names that matches <#{regex}>"
 puts "  .#{extension.join("\n  .")}"
 puts "**************************************************"
 puts "Files with content that matches <#{regex}>"
-puts regex
+puts fsearch
