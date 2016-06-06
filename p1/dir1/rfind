@@ -15,7 +15,9 @@ require 'find'              # Adds module "find"
 extension   = Array.new     # Note: Same as extension = []
 directory   = Dir.pwd       # Current Directory
 regex       = ARGV[0].to_s  # Turns terminal input into a string (to_s)
-fsearch     = Array.new
+fSearch     = Array.new
+lineNum     = Array.new
+count = 0
 
 Find.find(directory) do |path|
     extension << path if path =~ /#{regex}\w*.rb\b/
@@ -29,12 +31,20 @@ end
 
 extension.each do |filename|
     File.open filename do |file|
-        fsearch << file.find {|line| line =~ /#{regex}/}
+        file.each_line {count += 1}
+        fSearch << file.find {|line| line =~ /#{regex}/}
+        #return count if fSearch =~ /#{regex}/
     end
 end
 
 puts "Files with names that matches <#{regex}>"
-puts "  .#{extension.join("\n  .")}"
+if extension.size > 0
+    puts "  .#{extension.join("\n  .")}"
+end
+
 puts "**************************************************"
 puts "Files with content that matches <#{regex}>"
-puts fsearch
+if count > 0
+    print "  #{count}:"
+    puts fSearch
+end
