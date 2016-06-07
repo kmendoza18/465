@@ -22,18 +22,28 @@ puts "**************************************************"
 
 puts "Files with content that matches <#{regex}>"
 
-searchFiles = fArray.select {|dir| dir =~ /(\.rb$|\.erb$|\.js$|\.css$|\.html$|\.yml$|\.txt$)/}
+searchFiles = fArray.select {|dir| dir =~ /(\.rb$|\.erb$|\.js$|\.css$|\.html$|\.yml$|\.txt$)/}  # Array For All Files With Matching Extensions
 
 while count < searchFiles.length
     sf = `grep -i -n #{regex} #{searchFiles[count]}`
+
+    splitSF = sf.split("\n")
+
+    mapSF = splitSF.map {|item| "  " + item + "\n"}
+
+    finalSF = mapSF.join
+
     if sf != ""
-        puts searchFiles[count]
+        puts searchFiles[count] # Displays Directory Name Only if sf is Not Empty
     end
-    print "#{sf}"
+    print finalSF            # Displays Line Number and Content Matching REGEX
+
     count += 1
+
     if count != searchFiles.length
         if sf != ""
             puts "--------------------------------------------------"
         end
     end
+
 end
