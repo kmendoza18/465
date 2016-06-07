@@ -56,7 +56,7 @@ temp.each do |filename|
 end
 
 puts "Files with content that matches <#{regex}>"
-while count != lineNum.count do
+while count < temp.count do
     print "."
     puts temp[count]
     print "  #{lineNum[count]}:"
