@@ -31,9 +31,9 @@ end
 
 extension.each do |filename|
     File.open filename do |file|
-        file.each_line {count += 1}
         fSearch << file.find {|line| line =~ /#{regex}/}
-        #return count if fSearch =~ /#{regex}/
+        count = file.lineno
+        return count if fSearch =~ /#{regex}/
     end
 end
 
