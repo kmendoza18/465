@@ -4,63 +4,36 @@
 # CSCI 465
 # Project 1
 
-# Lines 8-10 are to test if ruby
-# was installed correctly
-# print "Enter a string: "
-# a = gets.chomp
-# print {a}
+require 'find'
 
-require 'find'              # Adds module "find"
-
-extension   = Array.new     # Note: Same as extension = []
-directory   = Dir.pwd       # Current Directory
-regex       = ARGV[0].to_s  # Turns terminal input into a string (to_s)
-fSearch     = Array.new
-lineNum     = Array.new
-temp        = Array.new
+regex   = ARGV[0].to_s
 count = 0
 
-Find.find(directory) do |path|
-    extension << path if path =~ /#{regex}\w*.rb\b/
-    extension << path if path =~ /#{regex}\w*.erb\b/
-    extension << path if path =~ /#{regex}\w*.js\b/
-    extension << path if path =~ /#{regex}\w*.css\b/
-    extension << path if path =~ /#{regex}\w*.html\b/
-    extension << path if path =~ /#{regex}\w*.yml\b/
-    extension << path if path =~ /#{regex}\w*.txt\b/
-end
+find    = `find .`
+fArray  = find.split
+
+directory = fArray.select {|dir| dir =~ /(#{regex}\w*.rb\b|#{regex}\w*.erb\b|#{regex}\w*.js\b|#{regex}\w*.css\b|#{regex}\w*.html\b|#{regex}\w*.yml\b|#{regex}\w*.txt\b)/}
 
 puts "Files with names that matches <#{regex}>"
-if extension.size > 0
-    puts "  .#{extension.join("\n  .")}"
+if directory.size > 0
+    puts "  #{directory.join("\n  ")}"
 end
-
 puts "**************************************************"
 
-Find.find(directory) do |path|
-    temp << path if path =~ /\w*.rb\b/
-    temp << path if path =~ /\w*.erb\b/
-    temp << path if path =~ /\w*.js\b/
-    temp << path if path =~ /\w*.css\b/
-    temp << path if path =~ /\w*.html\b/
-    temp << path if path =~ /\w*.yml\b/
-    temp << path if path =~ /\w*.txt\b/
-end
-
-temp.each do |filename|
-    File.open filename do |file|
-        fSearch << file.find_all {|line| line =~ /#{regex}/}
-        lineNum << file.lineno
-        return lineNum if fSearch =~ /#{regex}/
-    end
-end
-
 puts "Files with content that matches <#{regex}>"
-while count < temp.count do
-    print "."
-    puts temp[count]
-    print "  #{lineNum[count]}:"
-    puts fSearch[count]
-    puts "--------------------------------------------------"
+
+searchFiles = fArray.select {|dir| dir =~ /(\.rb$|\.erb$|\.js$|\.css$|\.html$|\.yml$|\.txt$)/}
+
+while count < searchFiles.length
+    sf = `grep -i -n #{regex} #{searchFiles[count]}`
+    if sf != ""
+        puts searchFiles[count]
+    end
+    print "#{sf}"
     count += 1
+    if count != searchFiles.length
+        if sf != ""
+            puts "--------------------------------------------------"
+        end
+    end
 end
