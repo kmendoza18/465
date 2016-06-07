@@ -10,13 +10,57 @@
 # a = gets.chomp
 # print {a}
 
-require 'find'      # Adds module "find"
+require 'find'              # Adds module "find"
 
-regex       = Array.new   # Note: Same as regex = []
-directory   = Dir.pwd     # Current Directory
+extension   = Array.new     # Note: Same as extension = []
+directory   = Dir.pwd       # Current Directory
+regex       = ARGV[0].to_s  # Turns terminal input into a string (to_s)
+fSearch     = Array.new
+lineNum     = Array.new
+temp        = Array.new
+count = 0
 
 Find.find(directory) do |path|
-    regex << path if path =~ *\.rb$/ || *\.erb$/ || *\.js$/ || *\.css$/ || *\.html$/ || *\.yml$/ || *\.txt$/
+    extension << path if path =~ /#{regex}\w*.rb\b/
+    extension << path if path =~ /#{regex}\w*.erb\b/
+    extension << path if path =~ /#{regex}\w*.js\b/
+    extension << path if path =~ /#{regex}\w*.css\b/
+    extension << path if path =~ /#{regex}\w*.html\b/
+    extension << path if path =~ /#{regex}\w*.yml\b/
+    extension << path if path =~ /#{regex}\w*.txt\b/
 end
 
-print regex
+puts "Files with names that matches <#{regex}>"
+if extension.size > 0
+    puts "  .#{extension.join("\n  .")}"
+end
+
+puts "**************************************************"
+
+Find.find(directory) do |path|
+    temp << path if path =~ /\w*.rb\b/
+    temp << path if path =~ /\w*.erb\b/
+    temp << path if path =~ /\w*.js\b/
+    temp << path if path =~ /\w*.css\b/
+    temp << path if path =~ /\w*.html\b/
+    temp << path if path =~ /\w*.yml\b/
+    temp << path if path =~ /\w*.txt\b/
+end
+
+temp.each do |filename|
+    File.open filename do |file|
+        fSearch << file.find_all {|line| line =~ /#{regex}/}
+        lineNum << file.lineno
+        return lineNum if fSearch =~ /#{regex}/
+    end
+end
+
+puts "Files with content that matches <#{regex}>"
+while count != lineNum.count do
+    print "."
+    puts temp[count]
+    print "  #{lineNum[count]}:"
+    puts fSearch[count]
+    puts "--------------------------------------------------"
+    count += 1
+end
