@@ -44,10 +44,10 @@ $endWord = String.new
 			@result = "You Lose!";
 		end
 	else
-		@result = "Illegal Change";
+		@result = "Illegal Word Change";
 	end
     else
-      @result = "Invalid Word";
+      @result = "Invalid Word. Must Be Lower Case";
     end
 
   end

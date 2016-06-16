@@ -3,10 +3,6 @@
 <h1><%= "Your Guesses" %></h1>
 <br>
 
-<%= "Query Text: #{@query_text}"%>
-
-<br>
-
 <% @query_text.each do |line| %>
     <%= "Step " + (@query_text.index(line) + 1).to_s + " -- " %>
     <%= line %>
