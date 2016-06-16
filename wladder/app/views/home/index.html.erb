@@ -7,6 +7,8 @@ Fill in each step with a word that differs from the word in the previous step by
 </p>
 <br>
 <%=form_tag(query_path, method: "get")do %>
+	<%=label_tag("Initial Word: #{@initWord}") %>
+	<br>
 	<%=label_tag(:query, "Step 1: ")%>
 	<%=text_field_tag(:query1)%>
 	<br>
@@ -22,5 +24,7 @@ Fill in each step with a word that differs from the word in the previous step by
 	<%=label_tag(:query, "Step 5: ")%>
 	<%=text_field_tag(:query5)%>	
 	<%=submit_tag("Check Answer")%>
+	<br>
+	<%=label_tag("Ending Word: #{@endWord}") %>
 <%end%>
 <br>

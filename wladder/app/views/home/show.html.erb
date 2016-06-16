@@ -1,13 +1,19 @@
 <%= link_to "Play Again", root_path %>
 
 <h1><%= "Your Guesses" %></h1>
-<p><%= "$ whois #{@query_text} returned" %></p>
-<p><%= "Bellow is testing the array and shit" %></p>
 <br>
 
-<% @result.each do |line| %>
+<%= "Query Text: #{@query_text}"%>
+
+<br>
+
+<% @query_text.each do |line| %>
+    <%= "Step " + (@query_text.index(line) + 1).to_s + " -- " %>
     <%= line %>
     <br>
 <% end %>
+
+<h1><%= "#{@result}" %></h1>
+<br>
 
 <%= link_to "Play Again", root_path %>

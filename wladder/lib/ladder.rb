@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 # functions to help with the implementation of the word ladder assignment
 
 # if you place this file in wladder/lib you can use it in your controller
