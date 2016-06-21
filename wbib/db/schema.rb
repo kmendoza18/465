@@ -17,7 +17,8 @@ ActiveRecord::Schema.define(version: 20160619215930) do
     t.text     "url"
     t.string   "topic"
     t.string   "annotation"
-    t.datetime "timedate"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

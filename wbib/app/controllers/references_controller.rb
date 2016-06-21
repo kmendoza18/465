@@ -22,7 +22,7 @@ class ReferencesController < ApplicationController
 
 	# POST /references
 	def create
-		@reference = Reference.new(params.require(:reference).permit(:url, :topic, :annotation, :timedate))
+		@reference = Reference.new(params.require(:reference).permit(:url, :topic, :annotation))
 		
 		if @reference.save
 			redirect_to @reference, notice: 'Reference Successfully Created'
@@ -34,7 +34,7 @@ class ReferencesController < ApplicationController
 	# PATCH /references/1
 	def update
 		@reference = Reference.find(params[:id])
-		if @reference.update(params.require(:reference).permit(:url, :topic, :annotation, :timedate))
+		if @reference.update(params.require(:reference).permit(:url, :topic, :annotation))
 			redirect_to @reference, notice: 'Reference Successfully Updated'
 		else
 			render :edit
@@ -43,7 +43,7 @@ class ReferencesController < ApplicationController
 
 	# DELETE /references/1
 	def destroy
-		@reference = Reference.fin(params[:id])
+		@reference = Reference.find(params[:id])
 		@reference.destroy
 			redirect_to references_url, notice: 'High Score Successfully Deleted'
 	end

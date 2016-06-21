@@ -1,8 +1,10 @@
-<p id="notice"><%= notice %></p>
+<h1><p id="notice"><%= notice %></p></h1>
+
+<h2><%= link_to 'New Reference', controller: "references", action: "new" %></h2><br>
 
 <p>
 	<strong>URL:</strong>
-	<%= @reference.url %>
+	<a href="<%= @reference.url %>" target="_blank"><%= @reference.url %></a>
 </p>
 
 <p>
@@ -17,7 +19,8 @@
 
 <p>
 	<strong>Time/Date:</strong>
-	<%= @reference.timedate %>
+	<%= @reference.created_at %>
 </p>
 
-<%= link_to'Show All References', references_path %>
+<%= link_to'Show All References', references_path %> | 
+<%= link_to'Delete', @reference, method: :delete, data: { confirm: "Are you sure you want to delete this reference?" } %>

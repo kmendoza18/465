@@ -4,7 +4,7 @@ class CreateReferences < ActiveRecord::Migration
 			r.text :url
 			r.string :topic
 			r.string :annotation
-			r.datetime :timedate
+			r.timestamps
 		end
 	end
 end
