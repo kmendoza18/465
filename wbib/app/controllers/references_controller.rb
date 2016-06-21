@@ -40,4 +40,11 @@ class ReferencesController < ApplicationController
 			render :edit
 		end
 	end
+
+	# DELETE /references/1
+	def destroy
+		@reference = Reference.fin(params[:id])
+		@reference.destroy
+			redirect_to references_url, notice: 'High Score Successfully Deleted'
+	end
 end

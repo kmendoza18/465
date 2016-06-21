@@ -7,7 +7,11 @@ Rails.application.routes.draw do
 	get 'references', to: 'references#index', as: 'references'
 	post 'references', to: 'references#create'
 	patch 'references/:id', to: 'references#update'
+
+	# Order Doesnt Matter
+	delete 'references/:id', to: 'references#destroy'
 	
+	# Must Be Last(?)
 	root 'references#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
