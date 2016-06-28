@@ -35,6 +35,7 @@ class ImagesController < ApplicationController
         format.json { render json: @image.errors, status: :unprocessable_entity }
       end
     end
+
 =begin
     @image.generate_filename  # a function you write to generate a random filename and put it in the images "filename" variable
     @image.user = current_user
