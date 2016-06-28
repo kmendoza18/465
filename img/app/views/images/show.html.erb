@@ -7,7 +7,11 @@
 
 <p>
   <strong>Status:</strong>
-  <%= @image.status %>
+  <% if @image.status == true %>
+    <%= 'Private' %>
+  <% else %>
+    <%= 'Public' %>
+  <% end %>
 </p>
 
 <p>
