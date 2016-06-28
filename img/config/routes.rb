@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  
+  get 'images/new', to: 'images#new', as: 'new_image'
+  
+  delete 'images/:id', to: 'images#destroy'
+
   resources :users do
   	resources :images, shallow: true
   end
@@ -9,6 +14,8 @@ Rails.application.routes.draw do
 	resources :tags, shallow: true
 	resources :users, shallow: true
   end
+
+  root 'images#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
