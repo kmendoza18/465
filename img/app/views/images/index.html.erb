@@ -37,24 +37,27 @@
      <% if image.status == false %> 
       <tr>
         <td><%= image.filename %></td>
-        
-        <% if image.status == true %>
-            <td><%= 'Yes' %></td>
-        <% else %>
-            <td><%= 'No' %></td>
-        <% end %>
-        
-        <td><%= image.user %></td>
+        <td><%= 'No' %></td>
+        <td><%= image.user.name %></td>
+        <td><%= image_tag root_url + "/images/" + image.filename, size: "100x100", alt: image.filename %></td>
         <td><%= link_to 'Show', image %></td>
-           
-           <%# if @image.user == current_user.name %>
+           <% if image.user == current_user %>
              <td><%= link_to 'Edit', edit_image_path(image) %></td>
              <td><%= link_to 'Destroy', image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-           <%# end %>
+           <% end %>
       </tr>
+     <% else %>
+        <% if image.user == current_user %>
+            <td><%= image.filename %></td>
+            <td><%= 'Yes' %></td>
+            <td><%= image.user.name %></td>
+            <td><%= image_tag root_url + "/images/" + image.filename, size: "100x100", alt: image.filename %></td>
+            <td><%= link_to 'Show', image %></td>
+            <td><%= link_to 'Edit', edit_image_path(image) %></td>
+            <td><%= link_to 'Destroy', image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
      <% end %>
     <% end %>
   </tbody>
 </table>
 
-<br>

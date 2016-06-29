@@ -25,6 +25,13 @@ class ImagesController < ApplicationController
   # POST /images.json
   def create
     @image = Image.new(image_params)
+    @image.generate_filename  # a function you write to generate a random filename and put it in the images "filename" variable
+    @image.user = current_user
+
+    @uploaded_io = params[:image][:uploaded_file]
+    File.open(Rails.root.join('public', 'images', @image.filename), 'wb') do |file|
+        file.write(@uploaded_io.read)
+    end
 
     respond_to do |format|
       if @image.save
