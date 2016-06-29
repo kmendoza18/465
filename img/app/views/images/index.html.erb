@@ -22,42 +22,46 @@
     </form>
 <% end %>
 
+<br>
+<h1><u><%= 'My Images' %></u></h1>
+<br>
+<% if !user_signed_in? %>
+    <h2><%= 'You must be logged in to view your images: ' %><%= link_to 'Log In', new_user_session_path %></h2>
+<% end %>
+
 <table>
   <thead>
-    <tr>
-      <th>Filename</th>
-      <th>Private?</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
     <% @images.each do |image| %>
-     <% if image.status == false %> 
-      <tr>
-        <td><%= image.filename %></td>
-        <td><%= 'No' %></td>
-        <td><%= image.user.name %></td>
-        <td><%= image_tag root_url + "/images/" + image.filename, size: "100x100", alt: image.filename %></td>
-        <td><%= link_to 'Show', image %></td>
-           <% if image.user == current_user %>
-             <td><%= link_to 'Edit', edit_image_path(image) %></td>
-             <td><%= link_to 'Destroy', image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-           <% end %>
-      </tr>
-     <% else %>
         <% if image.user == current_user %>
-            <td><%= image.filename %></td>
-            <td><%= 'Yes' %></td>
-            <td><%= image.user.name %></td>
-            <td><%= image_tag root_url + "/images/" + image.filename, size: "100x100", alt: image.filename %></td>
-            <td><%= link_to 'Show', image %></td>
-            <td><%= link_to 'Edit', edit_image_path(image) %></td>
-            <td><%= link_to 'Destroy', image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <tr>
+                <%= link_to (image_tag root_url + "/images/" + image.filename, size: "100x100", alt: image.filename), image %>
+            </tr>
         <% end %>
-     <% end %>
     <% end %>
-  </tbody>
+    <th colspan="2"></th>
+  </thead>
 </table>
 
+<br>
+<h1><u><%= 'Public Images' %></u></h1>
+<br>
+
+<table>
+    <thead>
+        <% @images.each do |image| %>
+            <% if image.status == false %>
+                <% if image.user != current_user %>
+                    <tr>
+                        <%= link_to (image_tag root_url + "/images/" + image.filename, size: "100x100", alt: image.filename), image %>
+                        <%= image.user.name %>
+                    </tr>
+                <% end %>
+            <% end %>
+        <% end %>
+        <th colspan="2"></th>
+    </thead>
+</table>
+
+<br>
+<h1><u><%= 'Private Images I have Access To %></u></h1>
+<br>
