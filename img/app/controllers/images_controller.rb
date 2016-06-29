@@ -10,6 +10,7 @@ class ImagesController < ApplicationController
   # GET /images/1
   # GET /images/1.json
   def show
+    @image_user = @image.image_users.new
   end
 
   # GET /images/new

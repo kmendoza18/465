@@ -6,6 +6,6 @@ class Image < ActiveRecord::Base
   has_many :tags, dependent: :destroy
 
   def generate_filename
-    @string ||=  SecureRandom.hex(8)
+    self.filename = SecureRandom.hex(8)
   end
 end
