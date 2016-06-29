@@ -10,6 +10,16 @@
 </p>
 
 <p>
+  <strong>User:</strong>
+  <%= @image.user.name %>
+</p>
+
+<p>
+  <strong>Tags:</strong>
+  <%= @image.tags %>
+</p>
+
+<p>
   <strong>Status:</strong>
   <% if @image.status == true %>
     <%= 'Private' %>
@@ -19,10 +29,32 @@
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @image.user.name %>
+    <strong>Users With Access:</strong><br>
+    <% if @image.status == true %>
+        <% @image.image_users.each do |list| %>
+            <%= list.image_users.name %>
+        <% end %>
+    <% else %>
+        <%= 'Everyone' %>
+    <% end %>
+    <% if @image.user == current_user %>
+        <%= form_for @image, :image_users => { :action => "update" } do |form| %>
+            <strong><%= 'Who can access this image?' %></strong>
+            <%= form.collection_select :image_users, User.all.order(:name), :name, :name %><br>
+            <%= form.submit %><br>
+        <% end %>
+    <% end %>
 </p>
 
+<% if @image.user == current_user %>
+  <%= form_for @image, :status => { :action => "update" } do |form| %>
+      <strong><%= 'Should this be a private image?' %></strong>
+      <%= form.check_box :status %><br>
+      <%= form.submit %><br>
+  <% end %>
+<% end %>
+
+<br>
 <% if @image.user == current_user %>
     <%= link_to 'Edit', edit_image_path(@image) %> |
     <%= link_to 'Delete', @image, method: :delete, data: { confirm: 'Delete Image?' } %> |

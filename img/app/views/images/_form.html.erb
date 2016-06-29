@@ -18,11 +18,23 @@
   </div>
 
   <div class="field">
-    <%= 'Private?'  %><br>
-    <%= f.check_box :status %>
+    <% form_for @image, :tags => { :action => "update" } do |form| %>
+        <%= form.text_field :tags %>
+    <% end %>
   </div>
 
   <div class="field">
+    <%= 'Private?'  %><br>
+    <%= f.check_box :status %>
+    </div>
+
+  <%#div class"field"%>
+    <%# 'If private image, select who can view:' %>
+    <%# f.collection_select :user_id, User.all.order(:name), :name, :name %>
+  <%#/div%>
+
+  <div class="field">
+    <br>
     <%= f.label :user_id %><%= ':' %>
     <%= current_user.name %>
   </div>

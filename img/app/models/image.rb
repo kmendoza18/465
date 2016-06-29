@@ -1,9 +1,11 @@
 class Image < ActiveRecord::Base
   belongs_to :user
+
+  has_many :users, through: :image_users
   has_many :image_users, through: :user, dependent: :destroy
-  has_many :tag
+  has_many :tags, dependent: :destroy
 
   def generate_filename
-    return (0...8).map { (65 + rand(26)).chr }.join
+    @string ||=  SecureRandom.hex(8)
   end
 end

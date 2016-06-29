@@ -7,11 +7,6 @@
     <%= 'Not ' + current_user.name + '? ' %>
     <%= link_to 'Logout', destroy_user_session_path, method: :delete %><br>
     <%= link_to 'Profile', edit_user_registration_path %><br>
-<% else %>
-    <h2><%= 'You must be logged in to edit contents: ' %>
-    <%= link_to 'Log In', new_user_session_path %></h2><br>
-    <%= 'Don\'t have an account? Sign up! It\'s free!' %><br>
-    <%= link_to 'Sign Up', new_user_registration_path %><br>
 <% end %>
 <br>
 
@@ -26,7 +21,9 @@
 <h1><u><%= 'My Images' %></u></h1>
 <br>
 <% if !user_signed_in? %>
-    <h2><%= 'You must be logged in to view your images: ' %><%= link_to 'Log In', new_user_session_path %></h2>
+    <h2><%= 'You must be logged in to view your images: ' %><%= link_to 'Log In', new_user_session_path %></h2><br>
+    <%= 'Don\'t have an account? Sign up! It\'s free!' %><br>
+    <%= link_to 'Sign Up', new_user_registration_path %>
 <% end %>
 
 <table>
@@ -63,5 +60,5 @@
 </table>
 
 <br>
-<h1><u><%= 'Private Images I have Access To %></u></h1>
+<h1><u><%= 'Private Images I have Access To' %></u></h1>
 <br>
