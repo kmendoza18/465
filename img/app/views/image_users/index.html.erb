@@ -14,8 +14,8 @@
   <tbody>
     <% @image_users.each do |image_user| %>
       <tr>
-        <td><%= image_user.image_id %></td>
-        <td><%= image_user.user_id %></td>
+        <td><%= image_user.image %></td>
+        <td><%= image_user.user %></td>
         <td><%= link_to 'Show', image_user %></td>
         <td><%= link_to 'Edit', edit_image_user_path(image_user) %></td>
         <td><%= link_to 'Destroy', image_user, method: :delete, data: { confirm: 'Are you sure?' } %></td>

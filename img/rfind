@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+
+# Kevin Mendoza
+# CSCI 465
+# Project 1
+
+require 'find'
+
+regex   = ARGV[0].to_s
+count = 0
+
+find    = `find .`
+fArray  = find.split
+
+directory = fArray.select {|dir| dir =~ /(#{regex}\w*.rb\b|#{regex}\w*.erb\b|#{regex}\w*.js\b|#{regex}\w*.css\b|#{regex}\w*.html\b|#{regex}\w*.yml\b|#{regex}\w*.txt\b)/}
+
+puts "Files with names that matches <#{regex}>"
+if directory.size > 0
+    puts "  #{directory.join("\n  ")}"
+end
+puts "**************************************************"
+
+puts "Files with content that matches <#{regex}>"
+
+searchFiles = fArray.select {|dir| dir =~ /(\.rb$|\.erb$|\.js$|\.css$|\.html$|\.yml$|\.txt$)/}  # Array For All Files With Matching Extensions
+
+sFiles = searchFiles.sort
+
+while count < sFiles.length
+    sf = `grep -i -n #{regex} #{sFiles[count]}`
+
+    splitSF = sf.split("\n")
+
+    mapSF = splitSF.map {|item| "  " + item + "\n"}
+
+    finalSF = mapSF.join
+
+    if sf != ""
+        puts sFiles[count] # Displays Directory Name Only if sf is Not Empty
+    end
+    print finalSF            # Displays Line Number and Content Matching REGEX
+
+    count += 1
+
+    if count < sFiles.length - 1
+        if sf != ""
+            puts "--------------------------------------------------"
+        end
+    end
+end

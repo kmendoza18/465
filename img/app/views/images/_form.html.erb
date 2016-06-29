@@ -13,11 +13,10 @@
 
   <div class="field">
     <%= f.label :filename %><br>
-    <%= f.text_field :filename %><br>
-    <%= f.file_field :uploaded_file %>
+    <%= f.text_field :filename %>
   </div>
   <div class="field">
-    <%= 'Private?' %><br>
+    <%= f.label :status %><br>
     <%= f.check_box :status %>
   </div>
   <div class="field">

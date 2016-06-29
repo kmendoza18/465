@@ -1,20 +1,11 @@
 Rails.application.routes.draw do
-  
-  get 'images/new', to: 'images#new', as: 'new_image'
-  
-  delete 'images/:id', to: 'images#destroy'
-
-  resources :users do
-  	resources :images, shallow: true
-  end
-  resources :image_users
-  resources :tags
+  devise_for :users
+  # resources :image_users
   resources :images do
-	resources :imageusers, shallow: true
-	resources :tags, shallow: true
-	resources :users, shallow: true
+    resources :tags, shallow: :true
+    resources :image_users, shallow: :true
   end
-
+  
   root 'images#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

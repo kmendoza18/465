@@ -3,9 +3,9 @@
 one:
   filename: MyString
   status: false
-  user_id: MyString
+  user_id: 
 
 two:
   filename: MyString
   status: false
-  user_id: MyString
+  user_id: 

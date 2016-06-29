@@ -1,6 +1,26 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Images</h1>
+<h1>Assignment 5: Social Image Network</h1>
+<br />
+<% if user_signed_in? %>
+    <h2><%= 'Welcome ' + current_user.name + '!' %></h2><br>
+    <%= 'Not ' + current_user.name + '? ' %>
+    <%= link_to 'Logout', destroy_user_session_path, method: :delete %><br>
+    <%= link_to 'Profile', edit_user_registration_path %><br>
+<% else %>
+    <h2><%= 'You must be logged in to edit contents: ' %>
+    <%= link_to 'Log In', new_user_session_path %></h2><br>
+    <%= 'Don\'t have an account? Sign up! It\'s free!' %><br>
+    <%= link_to 'Sign Up', new_user_registration_path %><br>
+<% end %>
+<br>
+
+<% if user_signed_in? %>
+    <form action="./images/new">
+        <input type="submit" value="Upload New Image">
+        <%# link_to 'New Image', new_image_path %>
+    </form>
+<% end %>
 
 <table>
   <thead>
@@ -8,29 +28,33 @@
       <th>Filename</th>
       <th>Private?</th>
       <th>User</th>
-      <th>File</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @images.each do |image| %>
+     <% if image.status == false %> 
       <tr>
         <td><%= image.filename %></td>
+        
         <% if image.status == true %>
-           <td><%= 'Yes' %></td>
+            <td><%= 'Yes' %></td>
         <% else %>
             <td><%= 'No' %></td>
         <% end %>
-        <td><%= image.user_id %></td>
+        
+        <td><%= image.user %></td>
         <td><%= link_to 'Show', image %></td>
-        <td><%= link_to 'Edit', edit_image_path(image) %></td>
-        <td><%= link_to 'Destroy', image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+           
+           <%# if @image.user == current_user.name %>
+             <td><%= link_to 'Edit', edit_image_path(image) %></td>
+             <td><%= link_to 'Destroy', image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+           <%# end %>
       </tr>
+     <% end %>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Image', new_image_path %>

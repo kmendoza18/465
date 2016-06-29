@@ -7,16 +7,12 @@
 
 <p>
   <strong>Status:</strong>
-  <% if @image.status == true %>
-    <%= 'Private' %>
-  <% else %>
-    <%= 'Public' %>
-  <% end %>
+  <%= @image.status %>
 </p>
 
 <p>
   <strong>User:</strong>
-  <%= @image.user_id %>
+  <%= @image.user %>
 </p>
 
 <%= link_to 'Edit', edit_image_path(@image) %> |
