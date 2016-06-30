@@ -5,17 +5,26 @@
 </p>
 
 <p>
-  <strong>User:</strong>
+  <h2><u>User:</u></h2><br>
   <%= @image.user.name %>
 </p>
 
 <p>
-  <strong>Tags:</strong>
-  <%= @image.tags.all %>
+  <h2><u>Tags:</u></h2><br>
+  <% @image.tags.each do |tag| %>
+    <%# if tag.new_record? %>
+        <%= tag.str %>
+        <%# link_to 'Edit', edit_tag_path(tag) %>
+        <%# link_to 'Delete', tag, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%# end %>
+  <% end %>
+  <br><br>
+  <h2><u>Create New Tag:</u></h2>
+  <%= render 'tags/form' %>
 </p>
 
 <p>
-  <strong>Status:</strong>
+  <h2><u>Status:</u></h2><br>
   <% if @image.status == true %>
     <%= 'Private' %>
   <% else %>
@@ -24,7 +33,7 @@
 </p>
 
 <p>
-    <strong>Users With Access:</strong><br>
+    <h2><u>Users With Access:</u></h2><br>
     <% if @image.status == true %>
         <% @image.image_users.each do |list| %>
             <%= list.user_id %>
@@ -34,8 +43,8 @@
     <% end %>
     <% if @image.user == current_user %>
         <%= form_for @image, :image_users => { :action => "update" } do |form| %>
-            <strong><%= 'Who can access this image?' %></strong>
-            <%= form.collection_select :image_users, User.all.order(:name), :name, :name, :include_blank => '' %><br>
+            <h2><u><%= 'Who can access this image?' %></u></h2><br>
+            <%= form.collection_select :image_users, User.all.order(:name), :name, :name, :include_blank => '' %><br><br>
             <%= form.submit %>
         <% end %>
     <% end %>
@@ -43,7 +52,7 @@
 
 <% if @image.user == current_user %>
   <%= form_for @image, :status => { :action => "update" } do |form| %>
-      <strong><%= 'Should this be a private image?' %></strong>
+      <h2><u><%= 'Should this be a private image?' %></u></h2><br>
       <%= form.check_box :status %><br>
       <%= form.submit %><br>
   <% end %>

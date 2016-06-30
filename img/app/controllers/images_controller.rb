@@ -10,12 +10,13 @@ class ImagesController < ApplicationController
   # GET /images/1
   # GET /images/1.json
   def show
-    @image_user = @image.image_users.new
+    @tag = @image.tags.new
   end
 
   # GET /images/new
   def new
     @image = Image.new
+    @image.tags.new
   end
 
   # GET /images/1/edit
@@ -28,6 +29,10 @@ class ImagesController < ApplicationController
     @image = Image.new(image_params)
     @image.generate_filename  # a function you write to generate a random filename and put it in the images "filename" variable
     @image.user = current_user
+    
+    @image.tags.each do |new_tag|
+        new_tag.user_id = current_user.id
+    end
 
     @uploaded_io = params[:image][:uploaded_file]
     File.open(Rails.root.join('public', 'images', @image.filename), 'wb') do |file|
@@ -77,6 +82,6 @@ class ImagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def image_params
-      params.require(:image).permit(:filename, :status, :user_id)
+      params.require(:image).permit(:filename, :status, :user_id, tags_attributes: [:str])
     end
 end

@@ -16,12 +16,15 @@
     <%= f.text_field :filename %><br>
     <%= f.file_field :uploaded_file %>
   </div>
-
+    
+  <% if @image.tags.last.new_record? %>  
+  <% f.fields_for :tags do |tags_form| %>
   <div class="field">
-    <% form_for @image, :tags => { :action => "update" } do |form| %>
-        <%= form.text_field :tags %>
-    <% end %>
+    <%= tags_form.label :str %><br>
+    <%= tags_form.text_field :str %>
   </div>
+  <% end %>
+  <% end %>
 
   <div class="field">
     <%= 'Private?'  %><br>
