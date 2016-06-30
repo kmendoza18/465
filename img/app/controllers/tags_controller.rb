@@ -24,6 +24,8 @@ class TagsController < ApplicationController
     # redirect to tag's image show page
     if @tag.save
         redirect_to image_url(@image), notice: 'Tag was successfully created.'
+    else
+        redirect_to image_url(@image), notice: 'Tag was NOT created.'
     end
   end
 
@@ -31,13 +33,13 @@ class TagsController < ApplicationController
     # params[:id] is the id of the tag to delete
     # look up in db, delete tag
     # redirect to tag's image show page
-
+    @tag = Tag.find params[:id]
     @tag.destroy
-        redirect_to image_url(@image), notice: 'Tag was successfully deleted.'
+    redirect_to image_url(@tag.image), notice: 'Tag was successfully deleted.'
   end
 
   def edit
-    @tag = Tag.find(params[:id])
+    @tag = Tag.find params[:id]#params[:id]
   end
 
   def update
@@ -45,7 +47,7 @@ class TagsController < ApplicationController
     # redirect to the tag's image show page
 
     if @tag.update(tag_params)
-        redirect_to image_url(@image), notice: 'Tag was successfully updated.'
+        redirect_to image_url(@tag.image), notice: 'Tag was successfully updated.'
     end
   end
 
@@ -56,6 +58,6 @@ class TagsController < ApplicationController
     end
 
     def tag_params
-      params.require(:tag).permit(:str, :image_id)
+      params.require(:tag).permit(:str)
     end
 end

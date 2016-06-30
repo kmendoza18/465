@@ -11,6 +11,7 @@ class ImagesController < ApplicationController
   # GET /images/1.json
   def show
     @tag = @image.tags.new
+    @image_user = @image.image_users.new
   end
 
   # GET /images/new

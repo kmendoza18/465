@@ -1,4 +1,3 @@
-<%= stylesheet_link_tag "dstyle" %>
 <p id="notice"><%= notice %></p>
 
 <h1>Assignment 5: Social Image Network</h1>
@@ -31,9 +30,9 @@
   <thead>
     <% @images.each do |image| %>
         <% if image.user == current_user %>
-            <tr>
-               <pad><%= link_to (image_tag root_url + "/images/" + image.filename, size: "100x100", alt: image.filename), image %></pad>
-            </tr>
+            <pad>
+               <%= link_to (image_tag root_url + "/images/" + image.filename, size: "100x100", alt: image.filename), image %>
+            </pad>
         <% end %>
     <% end %>
     <th colspan="2"></th>
@@ -49,10 +48,9 @@
         <% @images.each do |image| %>
             <% if image.status == false %>
                 <% if image.user != current_user %>
-                    <tr>
+                       <pad><fltr><figure>
                        <%= link_to (image_tag root_url + "/images/" + image.filename, size: "100x100", alt: image.filename), image %>
-                        <%= image.user.name %>
-                    </tr>
+                       <figcaption><%= image.user.name %></figcation></figure></fltr></pad>
                 <% end %>
             <% end %>
         <% end %>
@@ -60,9 +58,13 @@
     </thead>
 </table>
 
+<th>
+<p>
 <br>
 <h1><u><%= 'Private Images I have Access To' %></u></h1>
 <br>
+</p>
+</th>
 
 <table>
     <thead>
@@ -71,9 +73,11 @@
                 <% if image.user != current_user %>
                     <% image.image_users.each do |ids| %>
                         <% if ids.user == current_user %>
-                        <tr>
+                        <tr><pad><fltr><figure>
                             <%= link_to (image_tag root_url + "/images/" + image.filename, size: "100x100", alt: image.filename), image %>
-                        </tr>
+                            <figcaption><%= image.user.name %></figcaption>
+                            </figure></pad>
+                        </fltr></tr>
                     <% end %>
                     <% end %>
                 <% end %>

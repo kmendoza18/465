@@ -1,64 +1,74 @@
 <p id="notice"><%= notice %></p>
 
+
 <p>
     <%= image_tag root_url + "/images/" + @image.filename, size: "300x300", alt: @image.filename %>
 </p>
 
+
 <p>
-  <h2><u>User:</u></h2><br>
-  <%= @image.user.name %>
+  <h2><u>User:</u></h2>
+  <h3><%= @image.user.name %></h3>
 </p>
+
+
+<p>
+  <h2><u>Status:</u></h2>
+  <% if @image.status == true %>
+    <h3><%= 'Private' %></h3>
+  <% else %>
+    <h3><%= 'Public' %></h3>
+  <% end %>
+</p>
+
 
 <p>
   <h2><u>Tags:</u></h2><br>
   <% @image.tags.each do |tag| %>
-    <%# if tag.new_record? %>
+    <% if !tag.new_record? %>
         <%= tag.str %>
-        <%= link_to 'Edit', edit_tag_path(tag.image_id) %>
-        <%# link_to 'Delete', tag, method: :delete, data: { confirm: 'Are you sure?' } %><br>
-    <%# end %>
+        <% if @image.user == current_user %>
+            <%= link_to 'Edit', edit_tag_path(tag.image_id) %>
+            <%= link_to 'Delete', tag_path(tag), method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% end %>
+        <br>
+    <% end %>
   <% end %>
-  <br><br>
+  <br>
   <h2><u>Create New Tag:</u></h2>
   <%= render 'tags/form' %>
 </p>
 
-<p>
-  <h2><u>Status:</u></h2><br>
-  <% if @image.status == true %>
-    <%= 'Private' %>
-  <% else %>
-    <%= 'Public' %>
-  <% end %>
-</p>
 
 <p>
     <h2><u>Users With Access:</u></h2><br>
     <% if @image.status == true %>
         <% @image.image_users.each do |list| %>
+          <% if !list.new_record? %>
             <%= list.user.name %>
-            <%= link_to 'Remove', list, method: :delete, data: { confirm: 'Are you sure?' } %><br>
+                <% if @image.user == current_user %> 
+                    <%= link_to 'Remove', list, method: :delete, data: { confirm: 'Are you sure?' } %><br>
+                <% end %>
+              <% end %>
         <% end %>
     <% else %>
         <%= 'Everyone' %>
     <% end %>
 
     <% if @image.user == current_user %>
-        <%= form_for @image, :user_id => { :action => "update" } do |form| %>
-            <h2><u><%= 'Who can access this image?' %></u></h2><br>
-            <%= select_tag :user_id, options_for_select(@image.users_without_access), prompt: "Select User" %>
-            <%= form.submit %>
-        <% end %>
+      <%= render 'image_users/form' %>
     <% end %>
 </p>
 
+
 <% if @image.user == current_user %>
   <%= form_for @image, :status => { :action => "update" } do |form| %>
-      <h2><u><%= 'Should this be a private image?' %></u></h2><br>
-      <%= form.check_box :status %><br>
+      <h2><u><%= 'Should this be a private image?' %></u></h2>
+      <cbox><%= form.check_box :status %></cbox><br>
       <%= form.submit %><br>
   <% end %>
 <% end %>
+
 
 <br>
 <% if @image.user == current_user %>

@@ -24,16 +24,13 @@ class ImageUsersController < ApplicationController
   # POST /image_users
   # POST /image_users.json
   def create
-    @image_user = ImageUser.new(image_user_params)
+    @image = Image.find params[:image_id]
+    @image_user = @image.image_users.new(image_user_params)
 
-    respond_to do |format|
-      if @image_user.save
-        format.html { redirect_to @image_user, notice: 'Image user was successfully created.' }
-        format.json { render :show, status: :created, location: @image_user }
-      else
-        format.html { render :new }
-        format.json { render json: @image_user.errors, status: :unprocessable_entity }
-      end
+    if @image_user.save
+      redirect_to @image, notice: 'User granted access' 
+    else
+      redirect_to @image, notice: 'User NOT granted access' 
     end
   end
 
@@ -55,10 +52,7 @@ class ImageUsersController < ApplicationController
   # DELETE /image_users/1.json
   def destroy
     @image_user.destroy
-    respond_to do |format|
-      format.html { redirect_to image_url, notice: 'Image user was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to @image_user.image, notice: 'User access deleted' 
   end
 
   private
