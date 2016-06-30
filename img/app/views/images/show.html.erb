@@ -14,8 +14,8 @@
   <% @image.tags.each do |tag| %>
     <%# if tag.new_record? %>
         <%= tag.str %>
-        <%# link_to 'Edit', edit_tag_path(tag) %>
-        <%# link_to 'Delete', tag, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <%= link_to 'Edit', edit_tag_path(tag.image_id) %>
+        <%# link_to 'Delete', tag, method: :delete, data: { confirm: 'Are you sure?' } %><br>
     <%# end %>
   <% end %>
   <br><br>
@@ -36,15 +36,17 @@
     <h2><u>Users With Access:</u></h2><br>
     <% if @image.status == true %>
         <% @image.image_users.each do |list| %>
-            <%= list.user_id %>
+            <%= list.user.name %>
+            <%= link_to 'Remove', list, method: :delete, data: { confirm: 'Are you sure?' } %><br>
         <% end %>
     <% else %>
         <%= 'Everyone' %>
     <% end %>
+
     <% if @image.user == current_user %>
         <%= form_for @image, :user_id => { :action => "update" } do |form| %>
             <h2><u><%= 'Who can access this image?' %></u></h2><br>
-            <%= select_tag form, options_for_select(@image.users_without_access) %>
+            <%= select_tag :user_id, options_for_select(@image.users_without_access), prompt: "Select User" %>
             <%= form.submit %>
         <% end %>
     <% end %>

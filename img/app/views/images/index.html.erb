@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag "dstyle" %>
 <p id="notice"><%= notice %></p>
 
 <h1>Assignment 5: Social Image Network</h1>
@@ -31,7 +32,7 @@
     <% @images.each do |image| %>
         <% if image.user == current_user %>
             <tr>
-                <%= link_to (image_tag root_url + "/images/" + image.filename, size: "100x100", alt: image.filename), image %>
+               <pad><%= link_to (image_tag root_url + "/images/" + image.filename, size: "100x100", alt: image.filename), image %></pad>
             </tr>
         <% end %>
     <% end %>
@@ -49,7 +50,7 @@
             <% if image.status == false %>
                 <% if image.user != current_user %>
                     <tr>
-                        <%= link_to (image_tag root_url + "/images/" + image.filename, size: "100x100", alt: image.filename), image %>
+                       <%= link_to (image_tag root_url + "/images/" + image.filename, size: "100x100", alt: image.filename), image %>
                         <%= image.user.name %>
                     </tr>
                 <% end %>
@@ -62,3 +63,22 @@
 <br>
 <h1><u><%= 'Private Images I have Access To' %></u></h1>
 <br>
+
+<table>
+    <thead>
+        <% @images.each do |image| %>
+            <% if image.status == true %>
+                <% if image.user != current_user %>
+                    <% image.image_users.each do |ids| %>
+                        <% if ids.user == current_user %>
+                        <tr>
+                            <%= link_to (image_tag root_url + "/images/" + image.filename, size: "100x100", alt: image.filename), image %>
+                        </tr>
+                    <% end %>
+                    <% end %>
+                <% end %>
+            <% end %>
+        <% end %>
+        <th colspan="2"></th>
+    </thead>
+</table>
