@@ -42,9 +42,9 @@
         <%= 'Everyone' %>
     <% end %>
     <% if @image.user == current_user %>
-        <%= form_for @image, :image_users => { :action => "update" } do |form| %>
+        <%= form_for @image, :user_id => { :action => "update" } do |form| %>
             <h2><u><%= 'Who can access this image?' %></u></h2><br>
-            <%= form.collection_select :image_users, User.all.order(:name), :name, :name, :include_blank => '' %><br><br>
+            <%= select_tag form, options_for_select(@image.users_without_access) %>
             <%= form.submit %>
         <% end %>
     <% end %>
