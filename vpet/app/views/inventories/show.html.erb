@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Item name:</strong>
+  <%= @inventory.item_name %>
+</p>
+
+<p>
+  <strong>Item effect:</strong>
+  <%= @inventory.item_effect %>
+</p>
+
+<p>
+  <strong>Item des:</strong>
+  <%= @inventory.item_des %>
+</p>
+
+<p>
+  <strong>Game prize:</strong>
+  <%= @inventory.game_prize %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @inventory.user %>
+</p>
+
+<%= link_to 'Edit', edit_inventory_path(@inventory) %> |
+<%= link_to 'Back', inventories_path %>
