@@ -18,7 +18,7 @@ class InventoriesControllerTest < ActionController::TestCase
 
   test "should create inventory" do
     assert_difference('Inventory.count') do
-      post :create, inventory: { game_prize: @inventory.game_prize, item_des: @inventory.item_des, item_effect: @inventory.item_effect, item_name: @inventory.item_name, user_id: @inventory.user_id }
+      post :create, inventory: { item_des: @inventory.item_des, item_effect: @inventory.item_effect, item_name: @inventory.item_name, money: @inventory.money, user_id: @inventory.user_id }
     end
 
     assert_redirected_to inventory_path(assigns(:inventory))
@@ -35,7 +35,7 @@ class InventoriesControllerTest < ActionController::TestCase
   end
 
   test "should update inventory" do
-    patch :update, id: @inventory, inventory: { game_prize: @inventory.game_prize, item_des: @inventory.item_des, item_effect: @inventory.item_effect, item_name: @inventory.item_name, user_id: @inventory.user_id }
+    patch :update, id: @inventory, inventory: { item_des: @inventory.item_des, item_effect: @inventory.item_effect, item_name: @inventory.item_name, money: @inventory.money, user_id: @inventory.user_id }
     assert_redirected_to inventory_path(assigns(:inventory))
   end
 

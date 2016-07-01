@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :shops
+  resources :shops
   resources :games
   resources :inventories
   resources :pets

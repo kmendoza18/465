@@ -3,11 +3,11 @@
 one:
   game_name: MyString
   game_des: MyString
-  game_prize: MyString
+  game_prize: 1
   user_id: 
 
 two:
   game_name: MyString
   game_des: MyString
-  game_prize: MyString
+  game_prize: 1
   user_id: 

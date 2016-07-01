@@ -11,6 +11,7 @@ class CreatePets < ActiveRecord::Migration
       t.integer :strength
       t.integer :defense
       t.timestamp :age
+      t.references :user, index: true, foreign_key: true
       t.references :highscore, index: true, foreign_key: true
 
       t.timestamps null: false

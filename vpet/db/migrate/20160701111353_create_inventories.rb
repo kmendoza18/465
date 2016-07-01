@@ -4,7 +4,7 @@ class CreateInventories < ActiveRecord::Migration
       t.string :item_name
       t.integer :item_effect
       t.string :item_des
-      t.integer :game_prize
+      t.integer :money
       t.references :user, index: true, foreign_key: true
 
       t.timestamps null: false
