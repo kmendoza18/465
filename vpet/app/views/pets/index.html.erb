@@ -2,6 +2,19 @@
 
 <h1>Listing Pets</h1>
 
+<br>
+<% if user_signed_in? %>
+    <h2><%= 'Welcome ' + current_user.name + '!' %></h2><br>
+        <%= 'Not ' + current_user.name + '? ' %>
+        <%= link_to 'Logout', destroy_user_session_path, mthod: :delete %><br>
+        <%= link_to 'Profile', edit_user_registration_path %><br>
+<% else %>
+    <h2><%= 'You must be logged in to see your pet: ' %>
+        <%= link_to 'Log In', new_user_session_path %></h2><br>
+        <%= 'Don\'t have an acount? Sign up! It\'s free!' %><br>
+        <%= link_to 'Sign Up', new_user_registration_path %>
+<% end %>
+
 <table>
   <thead>
     <tr>
