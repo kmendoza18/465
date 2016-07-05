@@ -24,11 +24,29 @@ class PetsController < ApplicationController
   # POST /pets
   # POST /pets.json
   def create
-    @pet = Pet.new(pet_params)
+    @pet            = Pet.new(pet_params)
+    @pet.user       = current_user
+    @pet.health     = 100
+    @pet.clean      = 100
+    @pet.mood       = 100
+    @pet.status     = true # Not Sick
+    @pet.strength   = rand(0...100)
+    @pet.defense    = rand(0...100)
+    @pet.age        = Time.now
+
+    if Time.now > (Time.parse "8:00 am")
+        if Time.now < (Time.parse "8:00 pm")
+            @pet.asleep = false
+        else
+            @pet.asleep = true
+        end
+    else
+        @pet.asleep = true
+    end
 
     respond_to do |format|
       if @pet.save
-        format.html { redirect_to @pet, notice: 'Pet was successfully created.' }
+        format.html { redirect_to @pet, notice: 'Your pet ' + @pet.name + ' was born!' }
         format.json { render :show, status: :created, location: @pet }
       else
         format.html { render :new }
