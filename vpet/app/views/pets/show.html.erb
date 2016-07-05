@@ -36,23 +36,23 @@
 </p>
 
 <p>
-  <strong>Strength:</strong>
-  <%= @pet.strength %>
-</p>
-
-<p>
-  <strong>Defense:</strong>
-  <%= @pet.defense %>
-</p>
-
-<p>
   <strong>Age:</strong>
   <%= @pet.age %>
 </p>
 
 <p>
+  <strong>Money:</strong>
+  <%= @pet.money %>
+</p>
+
+<p>
   <strong>User:</strong>
-  <%= @pet.user.name %>
+  <%= @pet.user %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @pet.user_id %>
 </p>
 
 <p>
@@ -60,4 +60,10 @@
   <%= @pet.highscore %>
 </p>
 
+<p>
+  <strong>User:</strong>
+  <%= @pet.user %>
+</p>
+
+<%= link_to 'Edit', edit_pet_path(@pet) %> |
 <%= link_to 'Back', pets_path %>

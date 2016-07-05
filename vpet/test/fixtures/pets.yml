@@ -8,11 +8,12 @@ one:
   mood: 1
   status: false
   asleep: false
-  strength: 1
-  defense: 1
-  age: 2016-07-01 04:13:06
-  user_id: 
+  age: 2016-07-05 02:16:34
+  money: 1
+  user: MyString
+  user_id: 1
   highscore_id: 
+  user_id: 
 
 two:
   name: MyString
@@ -22,8 +23,9 @@ two:
   mood: 1
   status: false
   asleep: false
-  strength: 1
-  defense: 1
-  age: 2016-07-01 04:13:06
-  user_id: 
+  age: 2016-07-05 02:16:34
+  money: 1
+  user: MyString
+  user_id: 1
   highscore_id: 
+  user_id: 

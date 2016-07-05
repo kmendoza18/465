@@ -18,7 +18,7 @@ class PetsControllerTest < ActionController::TestCase
 
   test "should create pet" do
     assert_difference('Pet.count') do
-      post :create, pet: { age: @pet.age, asleep: @pet.asleep, clean: @pet.clean, defense: @pet.defense, health: @pet.health, highscore_id: @pet.highscore_id, mood: @pet.mood, name: @pet.name, sex: @pet.sex, status: @pet.status, strength: @pet.strength, user_id: @pet.user_id }
+      post :create, pet: { age: @pet.age, asleep: @pet.asleep, clean: @pet.clean, health: @pet.health, highscore_id: @pet.highscore_id, money: @pet.money, mood: @pet.mood, name: @pet.name, sex: @pet.sex, status: @pet.status, user: @pet.user, user_id: @pet.user_id, user_id: @pet.user_id }
     end
 
     assert_redirected_to pet_path(assigns(:pet))
@@ -35,7 +35,7 @@ class PetsControllerTest < ActionController::TestCase
   end
 
   test "should update pet" do
-    patch :update, id: @pet, pet: { age: @pet.age, asleep: @pet.asleep, clean: @pet.clean, defense: @pet.defense, health: @pet.health, highscore_id: @pet.highscore_id, mood: @pet.mood, name: @pet.name, sex: @pet.sex, status: @pet.status, strength: @pet.strength, user_id: @pet.user_id }
+    patch :update, id: @pet, pet: { age: @pet.age, asleep: @pet.asleep, clean: @pet.clean, health: @pet.health, highscore_id: @pet.highscore_id, money: @pet.money, mood: @pet.mood, name: @pet.name, sex: @pet.sex, status: @pet.status, user: @pet.user, user_id: @pet.user_id, user_id: @pet.user_id }
     assert_redirected_to pet_path(assigns(:pet))
   end
 

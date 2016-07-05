@@ -11,36 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160701111840) do
+ActiveRecord::Schema.define(version: 20160705092101) do
 
   create_table "games", force: :cascade do |t|
-    t.string   "game_name"
-    t.string   "game_des"
-    t.integer  "game_prize"
-    t.integer  "user_id"
+    t.string   "g_name"
+    t.string   "g_des"
+    t.integer  "money"
+    t.integer  "pet_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "games", ["user_id"], name: "index_games_on_user_id"
+  add_index "games", ["pet_id"], name: "index_games_on_pet_id"
 
   create_table "highscores", force: :cascade do |t|
+    t.string   "name"
     t.integer  "score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  create_table "inventories", force: :cascade do |t|
-    t.string   "item_name"
-    t.integer  "item_effect"
-    t.string   "item_des"
-    t.integer  "money"
-    t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "inventories", ["user_id"], name: "index_inventories_on_user_id"
 
   create_table "pets", force: :cascade do |t|
     t.string   "name"
@@ -50,9 +39,9 @@ ActiveRecord::Schema.define(version: 20160701111840) do
     t.integer  "mood"
     t.boolean  "status"
     t.boolean  "asleep"
-    t.integer  "strength"
-    t.integer  "defense"
     t.datetime "age"
+    t.integer  "money"
+    t.string   "user"
     t.integer  "user_id"
     t.integer  "highscore_id"
     t.datetime "created_at",   null: false
@@ -61,17 +50,6 @@ ActiveRecord::Schema.define(version: 20160701111840) do
 
   add_index "pets", ["highscore_id"], name: "index_pets_on_highscore_id"
   add_index "pets", ["user_id"], name: "index_pets_on_user_id"
-
-  create_table "shops", force: :cascade do |t|
-    t.string   "item_name"
-    t.string   "item_des"
-    t.integer  "price"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "shops", ["user_id"], name: "index_shops_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

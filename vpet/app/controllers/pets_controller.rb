@@ -10,7 +10,6 @@ class PetsController < ApplicationController
   # GET /pets/1
   # GET /pets/1.json
   def show
-    @inventory = @pet.inventory.new
   end
 
   # GET /pets/new
@@ -25,29 +24,11 @@ class PetsController < ApplicationController
   # POST /pets
   # POST /pets.json
   def create
-    @pet            = Pet.new(pet_params)
-    @pet.user       = current_user
-    @pet.health     = 100
-    @pet.clean      = 100
-    @pet.mood       = 100
-    @pet.status     = true # Not Sick
-    @pet.strength   = rand(0...100)
-    @pet.defense    = rand(0...100)
-    @pet.age        = Time.now
-
-    if Time.now > (Time.parse "8:00 am")
-        if Time.now < (Time.parse "8:00 pm")
-            @pet.asleep = false
-        else
-            @pet.asleep = true
-        end
-    else
-        @pet.asleep = true
-    end
+    @pet = Pet.new(pet_params)
 
     respond_to do |format|
       if @pet.save
-        format.html { redirect_to @pet, notice: 'Your pet ' + @pet.name + ' was born!' }
+        format.html { redirect_to @pet, notice: 'Pet was successfully created.' }
         format.json { render :show, status: :created, location: @pet }
       else
         format.html { render :new }
@@ -88,6 +69,6 @@ class PetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pet_params
-      params.require(:pet).permit(:name, :sex, :health, :clean, :mood, :status, :asleep, :strength, :defense, :age, :user_id, :highscore_id)
+      params.require(:pet).permit(:name, :sex, :health, :clean, :mood, :status, :asleep, :age, :money, :user, :user_id, :highscore_id, :user_id)
     end
 end

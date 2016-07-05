@@ -5,10 +5,10 @@
 <table>
   <thead>
     <tr>
-      <th>Game name</th>
-      <th>Game des</th>
-      <th>Game prize</th>
-      <th>User</th>
+      <th>G name</th>
+      <th>G des</th>
+      <th>Money</th>
+      <th>Pet</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,10 +16,10 @@
   <tbody>
     <% @games.each do |game| %>
       <tr>
-        <td><%= game.game_name %></td>
-        <td><%= game.game_des %></td>
-        <td><%= game.game_prize %></td>
-        <td><%= game.user %></td>
+        <td><%= game.g_name %></td>
+        <td><%= game.g_des %></td>
+        <td><%= game.money %></td>
+        <td><%= game.pet %></td>
         <td><%= link_to 'Show', game %></td>
         <td><%= link_to 'Edit', edit_game_path(game) %></td>
         <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>

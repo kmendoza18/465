@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  sex: false
+  health: 1
+  clean: 1
+  mood: 1
+  status: false
+  asleep: false
+  strength: 1
+  defense: 1
+  age: 2016-07-01 04:13:06
+  user_id: 
+  highscore_id: 
+
+two:
+  name: MyString
+  sex: false
+  health: 1
+  clean: 1
+  mood: 1
+  status: false
+  asleep: false
+  strength: 1
+  defense: 1
+  age: 2016-07-01 04:13:06
+  user_id: 
+  highscore_id: 
