@@ -10,7 +10,6 @@ class CreatePets < ActiveRecord::Migration
       t.boolean :asleep
       t.timestamp :age
       t.integer :money
-      t.string :user
       t.integer :user_id
       t.references :highscore, index: true, foreign_key: true
       t.references :user, index: true, foreign_key: true

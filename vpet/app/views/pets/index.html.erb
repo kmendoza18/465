@@ -1,10 +1,34 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Pets</h1>
+<h1>TamagotChico</h1>
+
+<% if user_signed_in? %>
+    <h2><%= 'Welcome ' + current_user.name + '!' %></h2><br>
+        <%= 'Not ' + current_user.name + '? ' %>
+        <%= link_to 'Logout', destroy_user_session_path, method: :delete %><br>
+        <%= link_to 'Profile', edit_user_registration_path %><br><br>
+<% else %>
+    <h2><%= 'You must be logged in to see your pet: ' %>
+        <%= link_to 'Log In', new_user_session_path %></h2><br>
+        <%= 'Don\'t have an account? Sign up! It\'s free!' %><br>
+        <%= link_to 'Sign Up', new_user_registration_path %>
+<% end %>
 
 <table>
   <thead>
     <tr>
+
+        <% if user_signed_in? %>
+            <th>Your Pet's Name</th>
+            <th>View Pet's Stats</th>
+            <th>Change Pet's Name</th>
+            <th>Release Pet</th>
+        <% else %>
+            <th>Users With Pets</th>
+            <th>Name Of Pet</th>
+        <% end %>
+      
+      <%# COMMENT BLOCK %><% if false %>
       <th>Name</th>
       <th>Sex</th>
       <th>Health</th>
@@ -18,6 +42,8 @@
       <th>User</th>
       <th>Highscore</th>
       <th>User</th>
+      <% end %><%# END COMMENT BLOCK %>
+
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -25,6 +51,20 @@
   <tbody>
     <% @pets.each do |pet| %>
       <tr>
+        
+        <% if user_signed_in? %>
+            <% if pet.user == current_user %>
+                <td><%= pet.name %></td>
+                <td><%= link_to 'Show Stats', pet %></td>
+                <td><%= link_to 'Change', edit_pet_path(pet) %></td>
+                <td><%= link_to 'Release', pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+        <% else %>
+            <td><%= pet.user.name %></td>
+            <td><%= pet.name %></td>
+        <% end %>
+            
+        <%# COMMENT BLOCK %><% if false %>
         <td><%= pet.name %></td>
         <td><%= pet.sex %></td>
         <td><%= pet.health %></td>
@@ -38,9 +78,8 @@
         <td><%= pet.user_id %></td>
         <td><%= pet.highscore %></td>
         <td><%= pet.user %></td>
-        <td><%= link_to 'Show', pet %></td>
-        <td><%= link_to 'Edit', edit_pet_path(pet) %></td>
-        <td><%= link_to 'Destroy', pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %><%# END COMMENT BLOCK %>
+
       </tr>
     <% end %>
   </tbody>
@@ -48,4 +87,18 @@
 
 <br>
 
-<%= link_to 'New Pet', new_pet_path %>
+<% if user_signed_in? %>
+    <% temp = false %>
+    <% @pets.each do |pet| %>
+        <% break if temp == true %>
+        <% if pet.user == current_user %>
+            <% temp = true %>
+        <% end %>
+    <% end %>
+    <% if temp == false %>
+        <%= 'You do not have a pet yet or your pet has died.' %><br>
+        <%= link_to 'New Pet', new_pet_path %>
+    <% else %>
+        <%= 'You may only have one pet at a time.' %>
+    <% end %>
+<% end %>

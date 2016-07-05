@@ -7,7 +7,11 @@
 
 <p>
   <strong>Sex:</strong>
-  <%= @pet.sex %>
+  <% if @pet.sex == true %>
+    <%= 'Male' %>
+  <% else %>
+    <%= 'Female' %>
+  <% end %>
 </p>
 
 <p>
@@ -21,23 +25,31 @@
 </p>
 
 <p>
-  <strong>Mood:</strong>
+  <strong>Hunger:</strong>
   <%= @pet.mood %>
 </p>
 
 <p>
-  <strong>Status:</strong>
-  <%= @pet.status %>
+  <strong>Sick:</strong>
+  <% if @pet.status == true %>
+    <%= 'Yes' %>
+  <% else %>
+    <%= 'No' %>
+  <% end %>
 </p>
 
 <p>
-  <strong>Asleep:</strong>
-  <%= @pet.asleep %>
+  <strong>Sleeping:</strong>
+  <% if @pet.asleep == true %>
+    <%= 'Yes' %>
+  <% else %>
+    <%= 'No' %>
+  <% end %>
 </p>
 
 <p>
   <strong>Age:</strong>
-  <%= @pet.age %>
+  <%= ((Time.now - @pet.age)/1.day).ceil %>
 </p>
 
 <p>
@@ -46,8 +58,8 @@
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @pet.user %>
+  <strong>Owner:</strong>
+  <%= @pet.user.name %>
 </p>
 
 <p>
@@ -64,6 +76,8 @@
   <strong>User:</strong>
   <%= @pet.user %>
 </p>
+
+
 
 <%= link_to 'Edit', edit_pet_path(@pet) %> |
 <%= link_to 'Back', pets_path %>

@@ -41,7 +41,6 @@ ActiveRecord::Schema.define(version: 20160705092101) do
     t.boolean  "asleep"
     t.datetime "age"
     t.integer  "money"
-    t.string   "user"
     t.integer  "user_id"
     t.integer  "highscore_id"
     t.datetime "created_at",   null: false

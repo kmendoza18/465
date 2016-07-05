@@ -25,6 +25,25 @@ class PetsController < ApplicationController
   # POST /pets.json
   def create
     @pet = Pet.new(pet_params)
+    @pet.health = 100
+    @pet.clean = 100
+    @pet.mood = 100
+    @pet.status = false # not sick
+    @pet.age = Time.now
+    @pet.money = 0
+    @pet.highscore = 1
+    @pet.user = current_user
+    @pet.user_id = current_user.id
+
+    if Time.now > (Time.parse "8:00 am")
+        if Time.now < (Time.parse "8:00 pm")
+            @pet.asleep = false
+        else
+            @pet.asleep = true
+        end
+    else
+        @pet.asleep = true
+    end
 
     respond_to do |format|
       if @pet.save
