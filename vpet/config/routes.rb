@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  resources :games
-  resources :pets
   resources :highscores
+  resources :pets do
+    resources :games
+  end
   devise_for :users
 
   root 'pets#index'

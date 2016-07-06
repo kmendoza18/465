@@ -1,33 +1,25 @@
-<%= form_for(@game) do |f| %>
-  <% if @game.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@game.errors.count, "error") %> prohibited this game from being saved:</h2>
+<%= form_for([@pet, @game]) do |f| %>
+    <%= choice = select_tag(options_for_select(['', 'Rock', 'Paper', 'Scissors'])) %>
+    <%= temp = rand(1...3) %>
 
-      <ul>
-      <% @game.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+    <% if choice == 'Rock' && temp == 1 %>
+        <% f.submit "Submit" %>
+    <% end %>
 
-  <div class="field">
-    <%= f.label :g_name %><br>
-    <%= f.text_field :g_name %>
-  </div>
-  <div class="field">
-    <%= f.label :g_des %><br>
-    <%= f.text_field :g_des %>
-  </div>
-  <div class="field">
-    <%= f.label :money %><br>
-    <%= f.number_field :money %>
-  </div>
-  <div class="field">
-    <%= f.label :pet_id %><br>
-    <%= f.text_field :pet_id %>
-  </div>
+    <% if choice == 'Rock' && temp == 2 %>
+        <% f.submit "Submit" %>
+    <% end %>
+
+    <% if choice == 'Rock' && temp == 3 %>
+        <div class="actions">
+        <% f.submit "Submit", :onclick => (@pet.money + 10) %>
+        </div>
+    <% end %>
+
+<% if false %>
   <div class="actions">
     <%= f.submit %>
   </div>
+<% end %>
+
 <% end %>
