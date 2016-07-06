@@ -9,9 +9,17 @@
         <%= link_to 'Profile', edit_user_registration_path %><br><br>
 <% else %>
     <h2><%= 'You must be logged in to see your pet: ' %>
-        <%= link_to 'Log In', new_user_session_path %></h2><br>
+        <%= link_to 'Log In', new_user_session_path %></h2>
         <%= 'Don\'t have an account? Sign up! It\'s free!' %><br>
         <%= link_to 'Sign Up', new_user_registration_path %>
+<% end %>
+
+<br>
+
+<% if !user_signed_in? %>
+    <br><br><h1><%= 'The Stables' %></h1>
+<% else %>
+    <br><br><h1><%= 'Your Stall' %></h1>
 <% end %>
 
 <table>
@@ -20,12 +28,12 @@
 
         <% if user_signed_in? %>
             <th>Your Pet's Name</th>
-            <th>View Pet's Stats</th>
+            <th>Manage Your Pet</th>
             <th>Change Pet's Name</th>
             <th>Release Pet</th>
         <% else %>
-            <th>Users With Pets</th>
             <th>Name Of Pet</th>
+            <th>Owner</th>
         <% end %>
       
       <%# COMMENT BLOCK %><% if false %>
@@ -53,15 +61,15 @@
       <tr>
         
         <% if user_signed_in? %>
-            <% if pet.user == current_user %>
+            <% if pet.user == current_user || current_user.name == "admin" %>
                 <td><%= pet.name %></td>
-                <td><%= link_to 'Show Stats', pet %></td>
-                <td><%= link_to 'Change', edit_pet_path(pet) %></td>
+                <td><%= link_to 'Enter Stall', pet %></td>
+                <td><%= link_to 'Rename', edit_pet_path(pet) %></td>
                 <td><%= link_to 'Release', pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             <% end %>
         <% else %>
-            <td><%= pet.user.name %></td>
             <td><%= pet.name %></td>
+            <td><%= pet.user.name %></td>
         <% end %>
             
         <%# COMMENT BLOCK %><% if false %>
@@ -86,7 +94,6 @@
 </table>
 
 <br>
-
 <% if user_signed_in? %>
     <% temp = false %>
     <% @pets.each do |pet| %>
@@ -95,10 +102,39 @@
             <% temp = true %>
         <% end %>
     <% end %>
-    <% if temp == false %>
+    <% if current_user.name == "admin" %>
+        <%= 'Administrators currently cannot add pets. Demonstration purposes only.' %>
+    <% elsif temp == false %>
         <%= 'You do not have a pet yet or your pet has died.' %><br>
         <%= link_to 'Adopt a Pet', new_pet_path %>
     <% else %>
         <%= 'You may only have one pet at a time.' %>
     <% end %>
 <% end %>
+
+<% if user_signed_in? && current_user.name != "admin" %>
+<h1><%= 'The Stable' %></h1>
+<table>
+  <thead>
+    <tr>
+            <th>Name Of Pet</th>
+            <th>Owner</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pets.each do |pet| %>
+      <tr>
+            <% if pet.user != current_user || current_user.name == "admin" %>
+                <td><%= pet.name %></td>
+                <td><%= pet.user.name %></td>
+                <td><%= link_to 'Enter Stall', pet %></td>
+            <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% end %>
+

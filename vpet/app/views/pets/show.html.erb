@@ -16,73 +16,123 @@
 
 <p>
   <strong>Health:</strong>
-  <%= @pet.health %>
-  
+  <% if current_user.name == "admin" %>
+    <%= @pet.health %><%= ' - ' %>
+  <% end %>
+
   <% if @pet.health == 100 %>
-    <%= ' - Healthy' %>
+    <%= 'Healthy' %>
   <% elsif @pet.health < 100 && @pet.health >= 70 %>
-    <%= ' - Great' %>
+    <%= 'Great' %>
   <% elsif @pet.health < 70 && @pet.health >= 60 %>
-    <%= ' - Fine' %>
+    <%= 'Fine' %>
   <% elsif @pet.health < 60 && @pet.health >= 40 %>
-    <%= ' - Lethargic' %>
+    <%= 'Lethargic' %>
   <% elsif @pet.health < 40 && @pet.health >= 20 %>
-    <%= ' - Unhealthy' %>
+    <%= 'Unhealthy' %>
   <% else %>
-    <%= ' - Dying' %>
+    <%= 'Dying' %>
   <% end %>
 </p>
 
 <p>
   <strong>Clean:</strong>
-  <%= @pet.clean %>
-
-  <% if @pet.clean == 100 %>
-    <%= ' - Pristine' %>
-  <% elsif @pet.clean < 100 && @pet.clean >= 70 %>
-    <%= ' - Clean' %>
-  <% elsif @pet.clean < 70 && @pet.clean >= 60 %>
-    <%= ' - Normal' %>
-  <% elsif @pet.clean < 60 && @pet.clean >= 40 %>
-    <%= ' - Dirty' %>
-  <% elsif @pet.clean < 40 && @pet.clean >= 20 %>
-    <%= ' - Filthy' %>
-  <% else %>
-    <%= ' - Disgusting' %>
+  <% if current_user.name == "admin" %>
+    <%= @pet.clean %><%= ' - ' %>
   <% end %>
 
-  <%= link_to 'Clean Your Pet', pet_path(@pet, :pet => { :clean => 100}), method: :put %>
+  <% if @pet.clean == 100 %>
+    <%= 'Pristine' %>
+  <% elsif @pet.clean < 100 && @pet.clean >= 70 %>
+    <%= 'Clean' %>
+  <% elsif @pet.clean < 70 && @pet.clean >= 60 %>
+    <%= 'Normal' %>
+  <% elsif @pet.clean < 60 && @pet.clean >= 40 %>
+    <%= 'Dirty' %>
+  <% elsif @pet.clean < 40 && @pet.clean >= 20 %>
+    <%= 'Filthy' %>
+  <% else %>
+    <%= 'Disgusting' %>
+  <% end %>
+
+  <br>
+  <%= link_to 'Clean Pet', pet_path(@pet, :pet => { :clean => 100}), method: :put %>
 </p>
 
 <p>
   <strong>Hunger:</strong>
-  <%= @pet.mood %>
+  <% if current_user.name == "admin" %>
+    <%= @pet.mood %><%= ' - ' %>
+  <% end %>
 
   <% if @pet.mood == 100 %>
-    <%= ' - Full' %>
+    <%= 'Full' %>
   <% elsif @pet.mood < 100 && @pet.mood >= 70 %>
-    <%= ' - Well Fed' %>
+    <%= 'Well Fed' %>
   <% elsif @pet.mood < 70 && @pet.mood >= 60 %>
-    <%= ' - Fed' %>
+    <%= 'Fed' %>
   <% elsif @pet.mood < 60 && @pet.mood >= 40 %>
-    <%= ' - Hungry' %>
+    <%= 'Hungry' %>
   <% elsif @pet.mood < 40 && @pet.mood >= 20 %>
-    <%= ' - Famished' %>
+    <%= 'Famished' %>
   <% else %>
-    <%= ' - Dying' %>
+    <%= 'Dying' %>
   <% end %>
 </p>
 
+<% if current_user.name == @pet.user.name || current_user.name == "admin" %>
 <p>
     <strong>Feed Your Pet:</strong>
     <br>
-    <%= 'Soda - $2' %><br>
-    <%= 'Bread - $5' %><br>
-    <%= 'Steak Dinner - $10' %>
+    <%= 'Soda ~ $2' %>
+        <% if @pet.money >= 2 %>
+            <% if @pet.mood > 98 %>
+                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => 100, :money => (@pet.money - 2), :status => true}), method: :put %>
+            <% else %>
+                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => (@pet.mood + 2), :money => (@pet.money - 2)}), method: :put %>
+            <% end %>
+        <% else %>
+            <%= ' - You are broke. Play some games to get more money.' %>
+        <% end %>
+    <br>
+
+    <%= 'Bread ~ $5' %>
+        <% if @pet.money >= 5 %>
+            <% if @pet.mood > 95 %>
+                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => 100, :money => (@pet.money - 5), :status => true}), method: :put %>
+            <% else %>
+                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => (@pet.mood + 5), :money => (@pet.money - 5)}), method: :put %>
+            <% end %>
+        <% else %>
+            <%= ' - You cannot afford this.' %>
+        <% end %>
+    <br>
+
+    <%= 'Steak Dinner ~ $10' %>
+        <% if @pet.money >= 10 %>
+            <% if @pet.mood > 90 %>
+                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => 100, :money => (@pet.money - 10), :status => true}), method: :put %>
+            <% else %>
+                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => (@pet.mood + 10), :money => (@pet.money - 10)}), method: :put %>
+            <% end %>
+        <% else %>
+            <%= ' - This cut is too expensive.' %>
+        <% end %>
+</p>
+<% end %>
+
 <p>
   <strong>Sick:</strong>
   <% if @pet.status == true %>
-    <%= 'Yes' %>
+    <%= 'Yes - You overfed your pet! ' %>
+
+    <% if @pet.money < 25 %>
+        <%= 'Medicine costs $25' %>
+    <% else %>
+        <% if current_user.name == @pet.user.name || current_user.name == "admin" %>
+            <%= link_to 'Buy Medicine for $25?', pet_path(@pet, :pet => { :money => (@pet.money - 25), :status => false}), method: :put %>
+        <% end %>
+    <% end %>
   <% else %>
     <%= 'No' %>
   <% end %>
@@ -134,5 +184,25 @@
 </p>
 <% end %><%# END COMMENT BLOCK %>
 
-<%= link_to 'Edit', edit_pet_path(@pet) %> |
+<% if current_user.name == @pet.user.name || current_user.name == "admin" %>
+    <%= link_to 'Edit', edit_pet_path(@pet) %> |
+<% end %>
+
 <%= link_to 'Back', pets_path %>
+
+<br><br>
+
+<% if current_user.name == "admin" %>
+    <h1><%= 'CHEATS!' %></h1>
+    <p><strong><%= link_to 'Health = 0', pet_path(@pet, :pet => { :health => 0}), method: :put %></strong></p>
+    <p><strong><%= link_to 'Health = 50', pet_path(@pet, :pet => { :health => 50}), method: :put %></strong></p>
+    <p><strong><%= link_to 'Health = 100', pet_path(@pet, :pet => { :health => 100}), method: :put %></strong></p>
+    <p><strong><%= link_to 'Clean = 0', pet_path(@pet, :pet => { :clean => 0}), method: :put %></strong></p>
+    <p><strong><%= link_to 'Hunger = 0', pet_path(@pet, :pet => { :mood => 0}), method: :put %></strong></p>
+    <p><strong><%= link_to 'Hunger = 100', pet_path(@pet, :pet => { :mood => 100}), method: :put %></strong></p>
+    <p><strong><%= link_to 'Money = 0', pet_path(@pet, :pet => { :money => 0}), method: :put %></strong></p>
+    <p><strong><%= link_to 'Money = 9001', pet_path(@pet, :pet => { :money => 9001}), method: :put %></strong></p>
+    <p><strong><%= link_to 'Sick', pet_path(@pet, :pet => { :status => true}), method: :put %></strong></p>
+    <p><strong><%= link_to 'Not Sick', pet_path(@pet, :pet => { :status => false}), method: :put %></strong></p>
+<% end %>   
+    
