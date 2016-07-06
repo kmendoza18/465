@@ -56,7 +56,7 @@
   <% end %>
 
   <br>
-  <%= link_to 'Clean Pet', pet_path(@pet, :pet => { :clean => 100}), method: :put %>
+  <%= link_to 'Clean Pet', pet_path(@pet, :pet => { :clean => 110, :newtime => Time.now}), method: :put %>
 </p>
 
 <p>
@@ -87,9 +87,9 @@
     <%= 'Soda ~ $2' %>
         <% if @pet.money >= 2 %>
             <% if @pet.mood > 98 %>
-                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => 100, :money => (@pet.money - 2), :status => true}), method: :put %>
+                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => 110, :money => (@pet.money - 2), :status => true, :newtime => Time.now}), method: :put %>
             <% else %>
-                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => (@pet.mood + 2), :money => (@pet.money - 2)}), method: :put %>
+                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => (@pet.mood + 12), :money => (@pet.money - 2), :newtime => Time.now}), method: :put %>
             <% end %>
         <% else %>
             <%= ' - You are broke. Play some games to get more money.' %>
@@ -99,9 +99,9 @@
     <%= 'Bread ~ $5' %>
         <% if @pet.money >= 5 %>
             <% if @pet.mood > 95 %>
-                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => 100, :money => (@pet.money - 5), :status => true}), method: :put %>
+                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => 110, :money => (@pet.money - 5), :status => true, :newtime => Time.now}), method: :put %>
             <% else %>
-                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => (@pet.mood + 5), :money => (@pet.money - 5)}), method: :put %>
+                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => (@pet.mood + 15), :money => (@pet.money - 5), :newtime => Time.now}), method: :put %>
             <% end %>
         <% else %>
             <%= ' - You cannot afford this.' %>
@@ -111,9 +111,9 @@
     <%= 'Steak Dinner ~ $10' %>
         <% if @pet.money >= 10 %>
             <% if @pet.mood > 90 %>
-                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => 100, :money => (@pet.money - 10), :status => true}), method: :put %>
+                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => 110, :money => (@pet.money - 10), :status => true, :newtime => Time.now}), method: :put %>
             <% else %>
-                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => (@pet.mood + 10), :money => (@pet.money - 10)}), method: :put %>
+                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => (@pet.mood + 20), :money => (@pet.money - 10), :newtime => Time.now}), method: :put %>
             <% end %>
         <% else %>
             <%= ' - This cut is too expensive.' %>
@@ -130,7 +130,7 @@
         <%= 'Medicine costs $25' %>
     <% else %>
         <% if current_user.name == @pet.user.name || current_user.name == "admin" %>
-            <%= link_to 'Buy Medicine for $25?', pet_path(@pet, :pet => { :money => (@pet.money - 25), :status => false}), method: :put %>
+            <%= link_to 'Buy Medicine for $25?', pet_path(@pet, :pet => { :money => (@pet.money - 25), :status => false, :newtime => Time.now}), method: :put %>
         <% end %>
     <% end %>
   <% else %>
@@ -160,7 +160,7 @@
 <p>
   <strong>Money:</strong>
   <% if @pet.money == 0 %>
-    <%= link_to 'Look! A dollar!', pet_path(@pet, :pet => { :money => 1}), method: :put %>
+    <%= link_to 'Look! A dollar!', pet_path(@pet, :pet => { :money => 1, :newtime => Time.now}), method: :put %>
   <% else %>
     <%= '$' + @pet.money.to_s %>
   <% end %>
@@ -174,7 +174,7 @@
 <p>
     <strong>Play A Game:</strong>
 
-    <%= link_to 'Play', pet_games_path(@pet.id, @pet.games) %>
+    <%= link_to 'Play', pet_games_path(@pet.id, 1) %>
 </p>
 
 <%# COMMENT BLOCK %><% if false %>
@@ -204,15 +204,12 @@
 
 <% if current_user.name == "admin" %>
     <h1><%= 'CHEATS!' %></h1>
-    <p><strong><%= link_to 'Health = 0', pet_path(@pet, :pet => { :health => 0}), method: :put %></strong></p>
-    <p><strong><%= link_to 'Health = 50', pet_path(@pet, :pet => { :health => 50}), method: :put %></strong></p>
-    <p><strong><%= link_to 'Health = 100', pet_path(@pet, :pet => { :health => 100}), method: :put %></strong></p>
-    <p><strong><%= link_to 'Clean = 0', pet_path(@pet, :pet => { :clean => 0}), method: :put %></strong></p>
-    <p><strong><%= link_to 'Hunger = 0', pet_path(@pet, :pet => { :mood => 0}), method: :put %></strong></p>
-    <p><strong><%= link_to 'Hunger = 100', pet_path(@pet, :pet => { :mood => 100}), method: :put %></strong></p>
-    <p><strong><%= link_to 'Money = 0', pet_path(@pet, :pet => { :money => 0}), method: :put %></strong></p>
-    <p><strong><%= link_to 'Money = 9001', pet_path(@pet, :pet => { :money => 9001}), method: :put %></strong></p>
-    <p><strong><%= link_to 'Sick', pet_path(@pet, :pet => { :status => true}), method: :put %></strong></p>
-    <p><strong><%= link_to 'Not Sick', pet_path(@pet, :pet => { :status => false}), method: :put %></strong></p>
+    <p><strong><%= link_to 'Clean = 0', pet_path(@pet, :pet => { :clean => 10, :newtime => Time.now}), method: :put %></strong></p>
+    <p><strong><%= link_to 'Hunger = 0', pet_path(@pet, :pet => { :mood => 10, :newtime => Time.now}), method: :put %></strong></p>
+    <p><strong><%= link_to 'Hunger = 100', pet_path(@pet, :pet => { :mood => 110, :newtime => Time.now}), method: :put %></strong></p>
+    <p><strong><%= link_to 'Money = 0', pet_path(@pet, :pet => { :money => 0, :newtime => Time.now}), method: :put %></strong></p>
+    <p><strong><%= link_to 'Money = 9001', pet_path(@pet, :pet => { :money => 9001, :newtime => Time.now}), method: :put %></strong></p>
+    <p><strong><%= link_to 'Sick', pet_path(@pet, :pet => { :status => true, :newtime => Time.now}), method: :put %></strong></p>
+    <p><strong><%= link_to 'Not Sick', pet_path(@pet, :pet => { :status => false, :newtime => Time.now}), method: :put %></strong></p>
 <% end %>   
     

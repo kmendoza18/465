@@ -37,7 +37,7 @@
     <% temp = rand(1..2) %>
 
     <% if temp == 1 %>
-        <h2><%= link_to 'Heads', pet_game_path(:id => @game.id, :pet_id => @game.pet.id), method: :put %> |
+        <h2><%= link_to 'Heads', pet_game_path(:id => @game.id, :pet_id => @game.pet.id, :pet => { :money => 1}), method: :put %> |
             <%# link_to 'Tails', pet_game_path(@game.pet_id, @game, :game => { :money => 10}), method: :put %></h2>
     <% else %>
         <h2><%= link_to 'Heads', pet_game_path(:id => @game.id, :pet_id => @game.pet.id), method: :put %> |

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160706194249) do
+ActiveRecord::Schema.define(version: 20160706221255) do
 
   create_table "games", force: :cascade do |t|
     t.string   "g_name"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20160706194249) do
     t.integer  "highscore_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.datetime "newtime"
   end
 
   add_index "pets", ["highscore_id"], name: "index_pets_on_highscore_id"

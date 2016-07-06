@@ -11,9 +11,28 @@ class PetsController < ApplicationController
   # GET /pets/1.json
   def show
     @game = @pet.games.new
-    if Time.now.beginning_of_minute()
-        @pet.health -= 1
+
+    temp = (((Time.now) - @pet.newtime)/1.hour).ceil
+    
+    @pet.newtime = Time.now
+
+    if Time.now > (Time.parse "8:00 am")
+        if Time.now < (Time.parse "8:00 pm")
+            @pet.asleep = false
+            @pet.clean -= (temp * 10)
+            @pet.mood -= (temp * 10) 
+        else
+            @pet.asleep = true
+        end
+    else
+        @pet.asleep = true
     end
+
+    
+    if @pet.asleep == false
+    end
+
+    @pet.health = (@pet.clean + @pet.mood)/2
   end
 
   # GET /pets/new
@@ -35,6 +54,7 @@ class PetsController < ApplicationController
     @pet.mood = 100
     @pet.status = false # not sick
     @pet.age = Time.now
+    @pet.newtime = Time.now
     @pet.money = 0
     @pet.user = current_user
     @pet.user_id = current_user.id
@@ -84,6 +104,10 @@ class PetsController < ApplicationController
     end
   end
 
+  def self.decrement
+    @pet.health -= 1
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pet
@@ -92,6 +116,6 @@ class PetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pet_params
-      params.require(:pet).permit(:name, :sex, :health, :clean, :mood, :status, :asleep, :age, :money, :user, :user_id, :highscore_id, :user_id)
+      params.require(:pet).permit(:name, :sex, :health, :clean, :mood, :status, :asleep, :age, :money, :user, :newtime, :user_id, :highscore_id, :user_id)
     end
 end
