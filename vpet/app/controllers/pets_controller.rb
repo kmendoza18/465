@@ -31,7 +31,6 @@ class PetsController < ApplicationController
     @pet.status = false # not sick
     @pet.age = Time.now
     @pet.money = 0
-    @pet.highscore = 1
     @pet.user = current_user
     @pet.user_id = current_user.id
 

@@ -17,18 +17,68 @@
 <p>
   <strong>Health:</strong>
   <%= @pet.health %>
+  
+  <% if @pet.health == 100 %>
+    <%= ' - Healthy' %>
+  <% elsif @pet.health < 100 && @pet.health >= 70 %>
+    <%= ' - Great' %>
+  <% elsif @pet.health < 70 && @pet.health >= 60 %>
+    <%= ' - Fine' %>
+  <% elsif @pet.health < 60 && @pet.health >= 40 %>
+    <%= ' - Lethargic' %>
+  <% elsif @pet.health < 40 && @pet.health >= 20 %>
+    <%= ' - Unhealthy' %>
+  <% else %>
+    <%= ' - Dying' %>
+  <% end %>
 </p>
 
 <p>
   <strong>Clean:</strong>
   <%= @pet.clean %>
+
+  <% if @pet.clean == 100 %>
+    <%= ' - Pristine' %>
+  <% elsif @pet.clean < 100 && @pet.clean >= 70 %>
+    <%= ' - Clean' %>
+  <% elsif @pet.clean < 70 && @pet.clean >= 60 %>
+    <%= ' - Normal' %>
+  <% elsif @pet.clean < 60 && @pet.clean >= 40 %>
+    <%= ' - Dirty' %>
+  <% elsif @pet.clean < 40 && @pet.clean >= 20 %>
+    <%= ' - Filthy' %>
+  <% else %>
+    <%= ' - Disgusting' %>
+  <% end %>
+
+  <%= link_to 'Clean Your Pet', pet_path(@pet, :pet => { :clean => 100}), method: :put %>
 </p>
 
 <p>
   <strong>Hunger:</strong>
   <%= @pet.mood %>
+
+  <% if @pet.mood == 100 %>
+    <%= ' - Full' %>
+  <% elsif @pet.mood < 100 && @pet.mood >= 70 %>
+    <%= ' - Well Fed' %>
+  <% elsif @pet.mood < 70 && @pet.mood >= 60 %>
+    <%= ' - Fed' %>
+  <% elsif @pet.mood < 60 && @pet.mood >= 40 %>
+    <%= ' - Hungry' %>
+  <% elsif @pet.mood < 40 && @pet.mood >= 20 %>
+    <%= ' - Famished' %>
+  <% else %>
+    <%= ' - Dying' %>
+  <% end %>
 </p>
 
+<p>
+    <strong>Feed Your Pet:</strong>
+    <br>
+    <%= 'Soda - $2' %><br>
+    <%= 'Bread - $5' %><br>
+    <%= 'Steak Dinner - $10' %>
 <p>
   <strong>Sick:</strong>
   <% if @pet.status == true %>
@@ -50,11 +100,16 @@
 <p>
   <strong>Age:</strong>
   <%= ((Time.now - @pet.age)/1.day).ceil %>
+  <% if ((Time.now - @pet.age)/1.day).ceil == 1 %>
+    <%= ' Day Old' %>
+  <% else %>
+    <%= ' Days Old' %>
+  <% end %>
 </p>
 
 <p>
   <strong>Money:</strong>
-  <%= @pet.money %>
+  <%= '$' + @pet.money.to_s %>
 </p>
 
 <p>
@@ -62,6 +117,7 @@
   <%= @pet.user.name %>
 </p>
 
+<%# COMMENT BLOCK %><% if false %>
 <p>
   <strong>User:</strong>
   <%= @pet.user_id %>
@@ -76,8 +132,7 @@
   <strong>User:</strong>
   <%= @pet.user %>
 </p>
-
-
+<% end %><%# END COMMENT BLOCK %>
 
 <%= link_to 'Edit', edit_pet_path(@pet) %> |
 <%= link_to 'Back', pets_path %>
