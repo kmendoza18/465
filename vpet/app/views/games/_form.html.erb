@@ -1,8 +1,31 @@
 <%= form_for([@pet, @game]) do |f| %>
+
+<div class="field">
+    <%= f.label :g_name %><br />
+    <%= f.text_field :g_name %>
+</div>
+
+<div class="field">
+    <%= f.label :g_des %><br />
+    <%= f.text_field :g_des %>
+</div>
+
+<div class="field">
+    <%= f.label :money %><br />
+    <%= f.text_field :money %>
+</div>
+
+<div class="actions">
+    <%= f.submit %>
+</div>
+
+
+<% if false %>
     <%= choice = select_tag(options_for_select(['', 'Rock', 'Paper', 'Scissors'])) %>
     <%= temp = rand(1...3) %>
 
     <% if choice == 'Rock' && temp == 1 %>
+        <%= 'Test' %>
         <% f.submit "Submit" %>
     <% end %>
 
@@ -16,7 +39,6 @@
         </div>
     <% end %>
 
-<% if false %>
   <div class="actions">
     <%= f.submit %>
   </div>

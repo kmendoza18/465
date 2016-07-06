@@ -1,5 +1,5 @@
 class Pet < ActiveRecord::Base
   belongs_to :highscore
   belongs_to :user
-  has_one :game, dependent: :destroy
+  has_many :games, dependent: :destroy
 end

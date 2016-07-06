@@ -16,22 +16,23 @@ class GamesController < ApplicationController
   # GET /games/new
   def new
     @pet = Pet.find params[:pet_id]
-    @game = @pet.game.new
+    @game = @pet.games.new
   end
 
   # GET /games/1/edit
   def edit
+    @edit = Edit.find params[:id]
   end
 
   # POST /games
   # POST /games.json
   def create
     @pet = Pet.find params[:pet_id]
-    @game = @pet.game.new(game_params)
+    @game = @pet.games.new(game_params)
 
     respond_to do |format|
       if @game.save
-        format.html { redirect_to pet_url(@pet), notice: 'Game was successfully created.' }
+        format.html { redirect_to pet_games_url, notice: 'Game was successfully created.' }
         format.json { render :show, status: :created, location: @game }
       else
         format.html { render :new }
@@ -59,7 +60,7 @@ class GamesController < ApplicationController
   def destroy
     @game.destroy
     respond_to do |format|
-      format.html { redirect_to games_url, notice: 'Game was successfully destroyed.' }
+      format.html { redirect_to pet_games_url, notice: 'Game was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -20,5 +20,5 @@
   <%= @game.pet %>
 </p>
 
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+<%= link_to 'Edit', edit_pet_game_path(@game.pet.id, @game) %> |
+<%= link_to 'Back', pet_games_path %>

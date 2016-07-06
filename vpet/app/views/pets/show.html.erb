@@ -159,7 +159,11 @@
 
 <p>
   <strong>Money:</strong>
-  <%= '$' + @pet.money.to_s %>
+  <% if @pet.money == 0 %>
+    <%= link_to 'Look! A dollar!', pet_path(@pet, :pet => { :money => 1}), method: :put %>
+  <% else %>
+    <%= '$' + @pet.money.to_s %>
+  <% end %>
 </p>
 
 <p>
@@ -169,8 +173,10 @@
 
 <p>
     <strong>Play A Game:</strong>
-    <%# link_to 'Play', image_path %>
+
+    <%= link_to 'Play', pet_games_path(@pet.id, @pet.games) %>
 </p>
+
 <%# COMMENT BLOCK %><% if false %>
 <p>
   <strong>User:</strong>

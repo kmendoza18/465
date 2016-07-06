@@ -1,14 +1,30 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Games</h1>
+<h1>Welcome To The Casino!</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Your Pet</th>
+            <th>Money</th>
+            <th colspan="3"></th>
+        </tr>
+    <thead>
+
+    <tbody>
+        <tr>
+            <td><%= @pet.name %></td>
+            <td><%= @pet.money %></td>
+        </td>
+    </tbody>
+</table>
 
 <table>
   <thead>
     <tr>
-      <th>G name</th>
-      <th>G des</th>
-      <th>Money</th>
-      <th>Pet</th>
+      <th>Game Name</th>
+      <th>Game Description</th>
+      <th>Prize</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -19,10 +35,11 @@
         <td><%= game.g_name %></td>
         <td><%= game.g_des %></td>
         <td><%= game.money %></td>
-        <td><%= game.pet %></td>
-        <td><%= link_to 'Show', game %></td>
-        <td><%= link_to 'Edit', edit_game_path(game) %></td>
-        <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%# game.pet.name %></td>
+        <td><%# game.pet.money %></td>
+        <td><%= link_to 'Show', pet_game_path(@pet.id, game.id) %></td>
+        <td><%= link_to 'Edit', edit_pet_game_path(@pet.id, game.id) %></td>
+        <td><%= link_to 'Destroy', pet_game_path(@pet.id, game.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +47,8 @@
 
 <br>
 
-<%= link_to 'New Game', new_game_path %>
+<% if current_user.name == "admin" %>
+    <%= link_to 'New Game', new_pet_game_path %> |
+<% end %>
+<%= link_to 'Return to Pet\'s Page', pet_path(@pet) %> |
+<%= link_to 'Return to Stable', root_path %>

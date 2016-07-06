@@ -10,7 +10,7 @@ class PetsController < ApplicationController
   # GET /pets/1
   # GET /pets/1.json
   def show
-    @game = Game.new
+    @game = @pet.games.new
     if Time.now.beginning_of_minute()
         @pet.health -= 1
     end
@@ -19,7 +19,7 @@ class PetsController < ApplicationController
   # GET /pets/new
   def new
     @pet = Pet.new
-    @pet.game.new
+    @pet.games.new
   end
 
   # GET /pets/1/edit
