@@ -11,10 +11,8 @@ class PetsController < ApplicationController
   # GET /pets/1.json
   def show
     @game = Game.new
-    while true do
     if Time.now.beginning_of_minute()
         @pet.health -= 1
-    end
     end
   end
 
