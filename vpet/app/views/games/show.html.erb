@@ -1,24 +1,51 @@
 <p id="notice"><%= notice %></p>
 
+<h1><%= @game.g_name %></h1><br>
+
 <p>
-  <strong>G name:</strong>
-  <%= @game.g_name %>
+  <strong>Pet:</strong>
+  <%= @game.pet.name %>
 </p>
 
 <p>
-  <strong>G des:</strong>
+  <strong>Pet's Money:</strong>
+  <%= @game.pet.money %>
+</p>
+
+
+<p>
+  <strong>Game Rules:</strong>
   <%= @game.g_des %>
 </p>
 
 <p>
-  <strong>Money:</strong>
+  <strong>Prize:</strong>
   <%= @game.money %>
 </p>
 
 <p>
-  <strong>Pet:</strong>
-  <%= @game.pet %>
+    <strong>Cost to Play:</strong>
+    <%= @game.cost %>
 </p>
 
-<%= link_to 'Edit', edit_pet_game_path(@game.pet.id, @game) %> |
+<br>
+<h1>Play Game?</h1>
+<br>
+
+<%# FLIP A COIN %>
+<p>
+    <% temp = rand(1..2) %>
+
+    <% if temp == 1 %>
+        <h2><%= link_to 'Heads', pet_game_path(:id => @game.id, :pet_id => @game.pet.id), method: :put %> |
+            <%# link_to 'Tails', pet_game_path(@game.pet_id, @game, :game => { :money => 10}), method: :put %></h2>
+    <% else %>
+        <h2><%= link_to 'Heads', pet_game_path(:id => @game.id, :pet_id => @game.pet.id), method: :put %> |
+            <%# link_to 'Tails', pet_game_path(@game.pet_id, @game, :game => { :money => 10}), method: :put %></h2>
+    <% end %>
+</p>
+
+<% if current_user.name == "admin" %>
+    <%= link_to 'Edit', edit_pet_game_path(@game.pet.id, @game) %> |
+<% end %>
 <%= link_to 'Back', pet_games_path %>
