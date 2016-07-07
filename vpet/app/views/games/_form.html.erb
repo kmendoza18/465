@@ -1,10 +1,11 @@
 <%= form_for([@pet, @game]) do |f| %>
 
 <div class="field">
-    <%= f.label :g_name %><br />
+    <%= 'Account Nickname' %><br />
     <%= f.text_field :g_name %>
 </div>
 
+<%# COMMENT BLOCK %><% if false %>
 <div class="field">
     <%= f.label :g_des %><br />
     <%= f.text_field :g_des %>
@@ -19,9 +20,10 @@
     <%= f.label :cost %><br />
     <%= f.text_field :cost %>
 </div>
+<% end %><%# END COMMENT BLOCK %>
 
 <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Open Account"%>
 </div>
 
 <% end %>

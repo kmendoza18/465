@@ -1,31 +1,30 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Welcome To The Casino!</h1>
+<h1>"World Bank" and Casino</h1>
 
 <table>
     <thead>
         <tr>
             <th>Your Pet</th>
             <th>Money</th>
-            <th colspan="3"></th>
         </tr>
     <thead>
 
     <tbody>
         <tr>
             <td><%= @pet.name %></td>
-            <td><%= @pet.money %></td>
+            <td><%= '$' + @pet.money.to_s %></td>
         </td>
     </tbody>
 </table>
-
+<br>
 <table>
   <thead>
     <tr>
-      <th>Game Name</th>
-      <th>Game Rules</th>
-      <th>Prize</th>
-      <th>Cost to Play</th>
+      <th>Account Nickname</th>
+      <th>Account Balance</th>
+      <th>Account Information</th>
+      <th>Owner</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -34,13 +33,13 @@
     <% @games.each do |game| %>
       <tr>
         <td><%= game.g_name %></td>
+        <td><%= '$' + game.pet.cost.to_s %></td>
         <td><%= link_to 'Take A Look', pet_game_path(@pet.id, game.id) %></td>
-        <td><%= game.money %></td>
-        <td><%= game.cost %></td>
-        <td><%# game.pet.name %></td>
-        <td><%# game.pet.money %></td>
-        <td><%# link_to 'Edit', edit_pet_game_path(@pet.id, game.id) %></td>
-        <td><%= link_to 'Trash', pet_game_path(@pet.id, game.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= game.owner %></td>
+        <%# game.pet.name %>
+        <%# game.pet.money %>
+        <%# link_to 'Edit', edit_pet_game_path(@pet.id, game.id) %>
+        <td><%= link_to 'Close Account', pet_game_path(@pet.id, game.id), method: :delete, data: { confirm: 'Are you sure? All money will be lost!' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -48,8 +47,16 @@
 
 <br>
 
-<% if current_user.name == "admin" %>
-    <%= link_to 'New Game', new_pet_game_path %> |
+<% temp = false %>
+
+<% @games.each do |game| %>
+    <% if game.owner == current_user.name %>
+        <% temp = true %>
+    <% end %>
+<% end %>
+
+<% if current_user.name == "admin" || temp == false %>
+    <%= link_to 'Open Account', new_pet_game_path %> |
 <% end %>
 <%= link_to 'Return to Pet\'s Page', pet_path(@pet) %> |
 <%= link_to 'Return to Stable', root_path %>

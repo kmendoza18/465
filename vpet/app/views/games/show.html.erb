@@ -1,49 +1,94 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= @game.g_name %></h1><br>
-
+<h1><%= 'Account: ' +  @game.g_name %></h1><br>
+<table>
 <p>
-  <strong>Pet:</strong>
-  <%= @game.pet.name %>
+<th>  <strong>Pet:</strong></th>
+<td>  <%= @game.pet.name %></td>
 </p>
 
 <p>
-  <strong>Pet's Money:</strong>
-  <%= @game.pet.money %>
-</p>
+<th>  <strong>Pet's Money:</strong></th><td>
+  <%= '$' + @game.pet.money.to_s %><br>
 
-
-<p>
-  <strong>Game Rules:</strong>
-  <%= @game.g_des %>
-</p>
-
-<p>
-  <strong>Prize:</strong>
-  <%= @game.money %>
+  <% if @game.pet.money >= 5 %>
+    <%= link_to 'Deposit $5', pet_game_path(:id => @game.id, :pet_id => @game.pet.id, :game => {:cost => (@game.pet.cost + 5), :money => (@game.pet.money - 5), :newtime => Time.now}), method: :put %>
+  <% end %></td>
 </p>
 
 <p>
-    <strong>Cost to Play:</strong>
-    <%= @game.cost %>
+<th>    <strong>Money In Account:</strong></th><td>
+    
+    <% interest = (((Time.now) - @game.pet.newtime)/1.hour).ceil %>
+    <% @game.pet.newtime = Time.now %>
+
+    <% if Time.now > (Time.parse "8:00 am") %>
+        <% if Time.now < (Time.parse "8:00 pm") %>
+            <% @game.pet.cost = (@game.pet.cost.to_f * (interest.to_f * 1.10)).ceil %>
+        <% end %>
+    <% end %>
+
+    <%= '$' + @game.pet.cost.to_s %><br>
+    <% if @game.pet.cost >= 5 %>
+        <%= link_to 'Withdraw $5', pet_game_path(:id => @game.id, :pet_id => @game.pet.id, :game => {:cost => (@game.pet.cost - 5), :money => (@game.pet.money + 5), :newtime => Time.now}), method: :put %>
+    <% end %></td>
+   <%= 'Interest in bank account: 10% every hour' %> 
 </p>
+</table><br>
 
 <br>
-<h1>Play Game?</h1>
+<h1>Gamble?</h1>
 <br>
 
+<table>
 <%# FLIP A COIN %>
 <p>
+    <th><h2><%= 'Flip A Coin' %></h2>
+        <%= 'Cost To Play: $1' %><br>
+        <%= 'Payout: $3' %><br></th><td>
     <% temp = rand(1..2) %>
 
+    <% if @game.pet.money >= 1 %>
     <% if temp == 1 %>
-        <h2><%= link_to 'Heads', pet_game_path(:id => @game.id, :pet_id => @game.pet.id, :pet => { :money => 1}), method: :put %> |
-            <%# link_to 'Tails', pet_game_path(@game.pet_id, @game, :game => { :money => 10}), method: :put %></h2>
+        <%= link_to 'Heads', pet_game_path(:id => @game.id, :pet_id => @game.pet.id, :game => { :money => (@game.pet.money + 2), :newtime => Time.now}), method: :put %> |
+        <%= link_to 'Tails', pet_game_path(:pet_id => @game.pet_id, :id => @game.id, :game => { :money => (@game.pet.money - 1), :newtime => Time.now}), method: :put %>
     <% else %>
-        <h2><%= link_to 'Heads', pet_game_path(:id => @game.id, :pet_id => @game.pet.id), method: :put %> |
-            <%# link_to 'Tails', pet_game_path(@game.pet_id, @game, :game => { :money => 10}), method: :put %></h2>
+        <%= link_to 'Heads', pet_game_path(:id => @game.id, :pet_id => @game.pet_id, :game => { :money => (@game.pet.money - 1), :newtime => Time.now}), method: :put %> |
+        <%= link_to 'Tails', pet_game_path(:pet_id => @game.pet_id, :id => @game.id, :game => { :money => (@game.pet.money + 2), :newtime => Time.now}), method: :put %>
     <% end %>
+    <% else %>
+        <%= 'Not enough money to play. Try looking at your pet\'s page for money on the ground.' %>
+    <% end %></td>
 </p>
+
+</table><br><table>
+
+<p>
+<th>    <h2><%= 'Rock, Paper, Scissors' %></h2>
+        <%= 'Cost To Play: $5 '%><br>
+        <%= 'Payout: $15' %><br></th><td>
+    <% temp2 = rand(1..3) %>
+
+    <% if @game.pet.money >= 5 %>
+    <% if temp2 == 1 %>
+        <%= link_to 'Rock', pet_game_path(:id => @game.id, :pet_id => @game.pet.id, :game => { :money => (@game.pet.money - 0)}), method: :put %> |
+        <%= link_to 'Paper', pet_game_path(:pet_id => @game.pet_id, :id => @game.id, :game => { :money => (@game.pet.money + 10)}), method: :put %> |
+        <%= link_to 'Scissor', pet_game_path(:pet_id => @game.pet_id, :id => @game.id, :game => { :money => (@game.pet.money - 5)}), method: :put %>
+    <% elsif temp2 == 2 %>
+        <%= link_to 'Rock', pet_game_path(:id => @game.id, :pet_id => @game.pet_id, :game => { :money => (@game.pet.money - 5)}), method: :put %> |
+        <%= link_to 'Paper', pet_game_path(:pet_id => @game.pet_id, :id => @game.id, :game => { :money => (@game.pet.money - 0)}), method: :put %> |
+        <%= link_to 'Scissor', pet_game_path(:pet_id => @game.pet_id, :id => @game.id, :game => { :money => (@game.pet.money + 10)}), method: :put %>
+    <% else %>
+        <%= link_to 'Rock', pet_game_path(:id => @game.id, :pet_id => @game.pet_id, :game => { :money => (@game.pet.money + 10)}), method: :put %> |
+        <%= link_to 'Paper', pet_game_path(:pet_id => @game.pet_id, :id => @game.id, :game => { :money => (@game.pet.money - 5)}), method: :put %> |
+        <%= link_to 'Scissor', pet_game_path(:pet_id => @game.pet_id, :id => @game.id, :game => { :money => (@game.pet.money + 0)}), method: :put %>        
+    <% end %>
+    <% else %>
+        <%= 'Not enough money to play.' %>
+    <% end %></td>
+
+</p>
+</table>
 
 <% if current_user.name == "admin" %>
     <%= link_to 'Edit', edit_pet_game_path(@game.pet.id, @game) %> |

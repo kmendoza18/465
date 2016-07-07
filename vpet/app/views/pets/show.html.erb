@@ -1,21 +1,25 @@
 <p id="notice"><%= notice %></p>
 
+<h1>Your Pet</h1>
+
+<table>
 <p>
-  <strong>Name:</strong>
-  <%= @pet.name %>
+<th>  <strong>Name:</strong></th>
+  <td><%= @pet.name %></td>
 </p>
 
 <p>
-  <strong>Sex:</strong>
+  <th><strong>Sex:</strong></th><td>
   <% if @pet.sex == true %>
     <%= 'Male' %>
   <% else %>
     <%= 'Female' %>
-  <% end %>
+  <% end %></td>
 </p>
-
+</table><br>
+<table>
 <p>
-  <strong>Health:</strong>
+  <th><strong>Health:</strong></th><td>
   <% if current_user.name == "admin" %>
     <%= @pet.health %><%= ' - ' %>
   <% end %>
@@ -32,11 +36,11 @@
     <%= 'Unhealthy' %>
   <% else %>
     <%= 'Dying' %>
-  <% end %>
+  <% end %></td>
 </p>
 
 <p>
-  <strong>Clean:</strong>
+<th>  <strong>Clean:</strong></th><td>
   <% if current_user.name == "admin" %>
     <%= @pet.clean %><%= ' - ' %>
   <% end %>
@@ -56,11 +60,11 @@
   <% end %>
 
   <br>
-  <%= link_to 'Clean Pet', pet_path(@pet, :pet => { :clean => 110, :newtime => Time.now}), method: :put %>
+  <%= link_to 'Clean Pet', pet_path(@pet, :pet => { :clean => 100, :newtime => Time.now}), method: :put %></td>
 </p>
 
 <p>
-  <strong>Hunger:</strong>
+<th>  <strong>Hunger:</strong></th><td>
   <% if current_user.name == "admin" %>
     <%= @pet.mood %><%= ' - ' %>
   <% end %>
@@ -77,52 +81,54 @@
     <%= 'Famished' %>
   <% else %>
     <%= 'Dying' %>
-  <% end %>
+  <% end %></td>
 </p>
+</table><br>
+<table>
 
 <% if current_user.name == @pet.user.name || current_user.name == "admin" %>
 <p>
-    <strong>Feed Your Pet:</strong>
-    <br>
-    <%= 'Soda ~ $2' %>
+<th>    <strong>Feed Your Pet:</strong></th>
+<td>    <%= 'Soda ~ $2' %>
         <% if @pet.money >= 2 %>
             <% if @pet.mood > 98 %>
-                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => 110, :money => (@pet.money - 2), :status => true, :newtime => Time.now}), method: :put %>
+                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => 100, :money => (@pet.money - 2), :status => true, :newtime => Time.now}), method: :put %>
             <% else %>
                 <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => (@pet.mood + 12), :money => (@pet.money - 2), :newtime => Time.now}), method: :put %>
             <% end %>
         <% else %>
-            <%= ' - You are broke. Play some games to get more money.' %>
+            <%= ' - You are broke. Go to the casino to get more money.' %>
         <% end %>
-    <br>
+    <br></td><td>
 
     <%= 'Bread ~ $5' %>
         <% if @pet.money >= 5 %>
             <% if @pet.mood > 95 %>
-                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => 110, :money => (@pet.money - 5), :status => true, :newtime => Time.now}), method: :put %>
+                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => 100, :money => (@pet.money - 5), :status => true, :newtime => Time.now}), method: :put %>
             <% else %>
                 <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => (@pet.mood + 15), :money => (@pet.money - 5), :newtime => Time.now}), method: :put %>
             <% end %>
         <% else %>
             <%= ' - You cannot afford this.' %>
         <% end %>
-    <br>
+    <br></td><td>
 
     <%= 'Steak Dinner ~ $10' %>
         <% if @pet.money >= 10 %>
             <% if @pet.mood > 90 %>
-                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => 110, :money => (@pet.money - 10), :status => true, :newtime => Time.now}), method: :put %>
+                <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => 100, :money => (@pet.money - 10), :status => true, :newtime => Time.now}), method: :put %>
             <% else %>
                 <%= link_to 'Purchase', pet_path(@pet, :pet => { :mood => (@pet.mood + 20), :money => (@pet.money - 10), :newtime => Time.now}), method: :put %>
             <% end %>
         <% else %>
             <%= ' - This cut is too expensive.' %>
-        <% end %>
+        <% end %></td>
 </p>
 <% end %>
+</table><br><table>
 
 <p>
-  <strong>Sick:</strong>
+<th>  <strong>Sick:</strong></th><td>
   <% if @pet.status == true %>
     <%= 'Yes - You overfed your pet! ' %>
 
@@ -135,48 +141,55 @@
     <% end %>
   <% else %>
     <%= 'No' %>
-  <% end %>
+  <% end %></td>
 </p>
 
 <p>
-  <strong>Sleeping:</strong>
+<th>  <strong>Sleeping:</strong></th><td>
   <% if @pet.asleep == true %>
     <%= 'Yes' %>
   <% else %>
     <%= 'No' %>
-  <% end %>
+  <% end %></td>
 </p>
+</table><br><table>
 
 <p>
-  <strong>Age:</strong>
+<th>  <strong>Age:</strong></th><td>
   <%= ((Time.now - @pet.age)/1.day).ceil %>
   <% if ((Time.now - @pet.age)/1.day).ceil == 1 %>
     <%= ' Day Old' %>
   <% else %>
     <%= ' Days Old' %>
-  <% end %>
+  <% end %></td>
 </p>
 
+<% if current_user.name == @pet.user.name || current_user.name == "admin" %>
 <p>
-  <strong>Money:</strong>
+ <th> <strong>Money:</strong></th><td>
   <% if @pet.money == 0 %>
     <%= link_to 'Look! A dollar!', pet_path(@pet, :pet => { :money => 1, :newtime => Time.now}), method: :put %>
   <% else %>
     <%= '$' + @pet.money.to_s %>
-  <% end %>
+  <% end %></td>
 </p>
+<% end %>
 
 <p>
-  <strong>Owner:</strong>
-  <%= @pet.user.name %>
+<th>  <strong>Owner:</strong></th><td>
+  <%= @pet.user.name %></td>
 </p>
+</table><br><table>
 
+<% if current_user.name == @pet.user.name || current_user.name == "admin" %>
 <p>
-    <strong>Play A Game:</strong>
+<th>    <strong>Visit Casino:</strong></th><td>
 
-    <%= link_to 'Play', pet_games_path(@pet.id, 1) %>
+    <%= link_to 'Gamble', pet_games_path(@pet.id, @game) %></td>
 </p>
+<% end %>
 
+</table>
 <%# COMMENT BLOCK %><% if false %>
 <p>
   <strong>User:</strong>
@@ -212,4 +225,3 @@
     <p><strong><%= link_to 'Sick', pet_path(@pet, :pet => { :status => true, :newtime => Time.now}), method: :put %></strong></p>
     <p><strong><%= link_to 'Not Sick', pet_path(@pet, :pet => { :status => false, :newtime => Time.now}), method: :put %></strong></p>
 <% end %>   
-    

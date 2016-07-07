@@ -55,9 +55,10 @@ class PetsController < ApplicationController
     @pet.status = false # not sick
     @pet.age = Time.now
     @pet.newtime = Time.now
-    @pet.money = 0
+    @pet.money = 50
     @pet.user = current_user
     @pet.user_id = current_user.id
+    @pet.cost = 0
 
     if Time.now > (Time.parse "8:00 am")
         if Time.now < (Time.parse "8:00 pm")
@@ -116,6 +117,6 @@ class PetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pet_params
-      params.require(:pet).permit(:name, :sex, :health, :clean, :mood, :status, :asleep, :age, :money, :user, :newtime, :user_id, :highscore_id, :user_id)
+      params.require(:pet).permit(:name, :sex, :health, :clean, :mood, :status, :asleep, :age, :money, :user, :newtime, :user_id, :cost, :highscore_id, :user_id, games_attributes: [:money])
     end
 end

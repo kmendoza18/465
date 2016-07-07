@@ -11,6 +11,7 @@ class GamesController < ApplicationController
   # GET /games/1
   # GET /games/1.json
   def show
+    @game.pet.newtime = Time.now
   end
 
   # GET /games/new
@@ -29,6 +30,8 @@ class GamesController < ApplicationController
   def create
     @pet = Pet.find params[:pet_id]
     @game = @pet.games.new(game_params)
+    @game.owner = current_user.name
+    @game.cost = 0
 
     respond_to do |format|
       if @game.save
@@ -45,8 +48,8 @@ class GamesController < ApplicationController
   # PATCH/PUT /games/1.json
   def update
     respond_to do |format|
-      if @game.update(game_params)
-        format.html { redirect_to pet_url(@game.pet), notice: 'Game was successfully updated.' }
+      if @game.pet.update(game_params)
+        format.html { redirect_to pet_game_url, notice: 'Game was successfully updated.' }
         format.json { render :show, status: :ok, location: @game }
       else
         format.html { render :edit }
@@ -73,6 +76,6 @@ class GamesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
-      params.require(:game).permit(:g_name, :g_des, :money, :cost, :pet_id)
+      params.require(:game).permit(:g_name, :g_des, :money, :game, :pet, :cost, :owner, :pet_id)
     end
 end
