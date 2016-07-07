@@ -7,11 +7,23 @@ spending in-game currency to feed it, cleaning it, and keeping it healthy.
 The user may also spend said currency to "gamble" at the casino and even
 put it in a savings account to generate interest.
 
+== Author
+Kevin Mendoza - CSCI 465
+
+== Version History
+v1.1.0 - Production Candidate
+v1.0.1 - A few fixes and changes
+v1.0.0 - Initial build
+
 == Ruby Version
 Ruby v2.3.0
 
 == Gems Used
 Devise v4.2.0 
+
+== Screenshots
+
+SEE: application/public directory
 
 == Gameplay
 
@@ -67,11 +79,11 @@ bank account to earn 10% interest every hour.
 The user may:
     1) Withdraw and deposit money to and from his/her bank account.
     2) Play games in an attempt to earn more money. Cost to play are as
-       follows: Flip A Coin - $1, Rock Paper Scissors - $5. PAyouts are $3
+       follows: Flip A Coin - $1, Rock Paper Scissors - $5. Payouts are $3
        and $5 respectively.
 
 == Other Information
-~ Highscore system not implemented
-~ Sickness currently has no effect on overall health
-~ Pet death not implemented
-~ Many attributes are initialized in the controller upon creation
+    ~ Highscore system not implemented
+    ~ Sickness currently has no effect on overall health
+    ~ Pet death not implemented
+    ~ Many attributes are initialized in the controller upon creation
