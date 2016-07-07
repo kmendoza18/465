@@ -1,28 +1,77 @@
-== README
+== TamagotChico (vpet)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This application is a demonstration of how a game can be programmed in Ruby
+to be deployed using the Rails framework. TamagotChico is a pet management
+application in which registered users must take care of their (one) pet by
+spending in-game currency to feed it, cleaning it, and keeping it healthy.
+The user may also spend said currency to "gamble" at the casino and even
+put it in a savings account to generate interest.
 
-Things you may want to cover:
+== Ruby Version
+Ruby v2.3.0
 
-* Ruby version
+== Gems Used
+Devise v4.2.0 
 
-* System dependencies
+== Gameplay
 
-* Configuration
+== root 'pets#index'
+The user may:
+    1) Adopt (create) a new pet if he/she does not already have one
+    2) Rename (edit) pet's name and sex
+    3) Release (destroy) his/her pet
 
-* Database creation
+The user may also view another user's pets but may not make any
+modifications or perform any activities other than "cleaning" the
+pet.
 
-* Database initialization
+== pets#show
+This view provides an overall summary of the attributes of the owner's
+pet such as health, cleanliness, and hunger.
 
-* How to run the test suite
+Age is calculated based on the creation of the pet against the current
+time. Cleanliness and hunger reduce in value every hour as well (10
+points every hour).
 
-* Services (job queues, cache servers, search engines, etc.)
+Hunger, clean, and health are integers whose value is hidden to all but
+the administrator. Otherwise, these attributes only display general
+values such as "Healthy" or "Fine."
 
-* Deployment instructions
+The user may:
+    1) Clean the pet to raise the clean attribute. Attribute cannot go
+       over 100 nor go under 0.
+    2) Feed the pet to raise the hunger(mood) attribute. Attribute
+       cannot go over 100 nor go under 0. However, should the attribute
+       attempt to go over 100, the pet becomes sick and the (status)
+       flag is ticked.
+    3) Buy medicine to remove the sickness flag.
+    4) Find money if their funds drop to $0.
+    5) Visit the "casino" and attempt to earn more money.
 
-* ...
+== games#index
+Shows the user's bank account (if user has created one) as well as the
+values of :money and :pet_id from the pets table.
 
+The user may:
+    1) Create (Create) a new bank account (if user does not already have one).
+    2) View (Show) the account's information.
+    3) Close (Destroy) the account, removing any funds in the account in
+       the process.
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+== games#show
+Shows the account information of the user such as saved funds and current
+currency value. The user may also gamble their money here in an attempt
+to earn more money. Alternatively, the user may store money into the
+bank account to earn 10% interest every hour.
+
+The user may:
+    1) Withdraw and deposit money to and from his/her bank account.
+    2) Play games in an attempt to earn more money. Cost to play are as
+       follows: Flip A Coin - $1, Rock Paper Scissors - $5. PAyouts are $3
+       and $5 respectively.
+
+== Other Information
+~ Highscore system not implemented
+~ Sickness currently has no effect on overall health
+~ Pet death not implemented
+~ Many attributes are initialized in the controller upon creation
